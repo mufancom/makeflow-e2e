@@ -1,0 +1,41 @@
+{
+  "name": "makeflow-e2e",
+  "private": true,
+  "scripts": {
+    "lint-prettier": "prettier --list-different \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "lint-ts:makeflow-web": "tslint --project makeflow-web/test && tslint --project makeflow-web/scripts",
+    "test:makeflow-web": "jest --projects makeflow-web/test",
+    "test:makeflow-web-docker": "ts-node --transpileOnly --project makeflow-web/scripts/tsconfig.json makeflow-web/scripts/start-docker-and-test.ts"
+  },
+  "devDependencies": {
+    "@magicspace/configs": "^0.1.48",
+    "@magicspace/tslint-rules": "^0.1.42",
+    "@types/expect-puppeteer": "^3.3.1",
+    "@types/get-port": "^4.2.0",
+    "@types/jest": "^24.0.11",
+    "@types/jest-environment-puppeteer": "^4.0.0",
+    "@types/lodash": "^4.14.123",
+    "@types/node": "^10.12.0",
+    "@types/node-fetch": "^2.3.3",
+    "@types/puppeteer": "^1.12.3",
+    "chrome-paths": "^1.0.1",
+    "get-port": "^5.0.0",
+    "jest": "^24.7.1",
+    "jest-puppeteer": "^4.1.1",
+    "lodash": "^4.17.11",
+    "main-function": "^0.1.2",
+    "merge": "^1.2.1",
+    "node-fetch": "^2.4.1",
+    "prettier": "^1.17.0",
+    "puppeteer": "^1.15.0",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.1.0",
+    "tslang": "^0.1.13",
+    "tslib": "^1.9.3",
+    "tslint": "^5.16.0",
+    "tslint-language-service": "^0.9.9",
+    "turning": "0.1.0-wip.2",
+    "typescript": "3.4.5",
+    "villa": "^0.3.1"
+  }
+}
