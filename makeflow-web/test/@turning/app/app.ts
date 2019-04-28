@@ -13,3 +13,5 @@ turning
     await expect(page).toClick('.header-menu');
     await expect(page).toClick('.ui-dropdown-item', {text: '退出登录'});
   });
+
+export {};

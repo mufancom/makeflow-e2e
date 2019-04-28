@@ -14,6 +14,9 @@ export interface TurningContext {
     fullName: string;
     username: string;
   };
+  idea: {
+    active: string[];
+  };
 }
 
 export const turning = new Turning<TurningContext>({describe, test});

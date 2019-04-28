@@ -1,7 +1,6 @@
-import {TurningContext} from './@turning';
-import {generateRandomMobile} from './@utils';
+import {createContext, generateRandomMobile} from './@utils';
 
-export const USER_CONTEXT_A: TurningContext = {
+export const USER_CONTEXT_A = createContext({
   account: {
     mobile: generateRandomMobile(),
     password: 'abc123',
@@ -12,7 +11,7 @@ export const USER_CONTEXT_A: TurningContext = {
     industry: '其他',
   },
   user: {
-    fullName: 'Foo Bar',
-    username: 'foobar',
+    fullName: '福 Bar',
+    username: 'fubar',
   },
-};
+});

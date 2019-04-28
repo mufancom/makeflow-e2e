@@ -1,5 +1,6 @@
 import {WEBSITE_LOGOUT_URL, WEBSITE_URL} from '../../@urls';
 import {USER_CONTEXT_A} from '../../@users';
+import {createContext} from '../../@utils';
 import {turning} from '../turning';
 
 turning.define('website:home').test(async () => {
@@ -13,7 +14,7 @@ turning
     await page.goto(WEBSITE_LOGOUT_URL);
     await page.goto(WEBSITE_URL);
 
-    return {};
+    return createContext();
   });
 
 turning
@@ -41,3 +42,5 @@ turning
 
     return USER_CONTEXT_A;
   });
+
+export {};

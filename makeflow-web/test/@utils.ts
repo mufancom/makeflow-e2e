@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import {Page} from 'puppeteer';
 import * as v from 'villa';
 
+import {TurningContext} from './@turning';
 import {API_E2E_GET_VERIFICATION_CODE_URL} from './@urls';
 
 export async function getVerificationCode(): Promise<string> {
@@ -17,6 +18,17 @@ export function generateRandomMobile(): string {
     .padStart(8, '0')}`;
 }
 
+export function createContext(
+  partial: Partial<TurningContext> = {},
+): TurningContext {
+  return {
+    idea: {
+      active: [],
+    },
+    ...partial,
+  };
+}
+
 export async function pageUISelect(
   page: Page,
   selector: string,
@@ -26,4 +38,8 @@ export async function pageUISelect(
   await (await page.$x(
     `//*[contains(@class, "ui-default-option-component") and text()="${optionText}"]`,
   ))[0].click();
+}
+
+export async function waitForSyncing(page: Page): Promise<void> {
+  await page.waitFor('.syncing-info:not(.syncing)');
 }
