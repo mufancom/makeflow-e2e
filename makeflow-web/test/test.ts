@@ -19,6 +19,4 @@ turning.case('logout user A from workbench', [
   'click app logout link',
 ]);
 
-turning.test({
-  only: ['9', '11'],
-});
+turning.test();
