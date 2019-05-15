@@ -8,10 +8,15 @@ import {turning} from '../turning';
 turning.define('website:sign-up:create-account').test(async () => {
   await page.waitFor('.create-account-view');
 
+  await expect(page).toMatchElement('input[name="mobile"]');
+
   await expect(page).not.toMatchElement('input[name="code"]');
   await expect(page).not.toMatchElement('input[name="password"]');
 
-  await expect(page).toMatchElement('.submit-button', {text: '下一步'});
+  await expect(page).toMatchElement('.submit-button', {
+    text: '下一步',
+    timeout: 1000,
+  });
 });
 
 turning
@@ -150,5 +155,3 @@ turning
       username,
     };
   });
-
-export {};

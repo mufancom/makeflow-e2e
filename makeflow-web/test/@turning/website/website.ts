@@ -42,5 +42,3 @@ turning
 
     return USER_CONTEXT_A;
   });
-
-export {};

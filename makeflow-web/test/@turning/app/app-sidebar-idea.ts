@@ -1,3 +1,4 @@
+import {lorem} from 'faker';
 import _ from 'lodash';
 
 import {waitForSyncing} from '../../@utils';
@@ -37,7 +38,7 @@ turning
   .by('creating a new idea', async context => {
     context = _.cloneDeep(context);
 
-    let text = `这是一个忧伤的故事 ${Math.random()}`;
+    let text = lorem.sentence();
 
     await page.type('.idea-list > .idea-list-new-item input', `${text}\n`);
 
@@ -49,5 +50,3 @@ turning
 
     return context;
   });
-
-export const __ = undefined;

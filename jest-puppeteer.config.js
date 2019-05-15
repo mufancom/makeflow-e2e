@@ -4,5 +4,7 @@ module.exports = {
   launch: {
     headless: !!process.env.CI,
     executablePath: chromePaths.chrome,
+    defaultViewport: null,
+    args: ['--disable-infobars'],
   },
 };

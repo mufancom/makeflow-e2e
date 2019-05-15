@@ -23,5 +23,3 @@ turning
   .by('clicking sidebar user avatar', async () => {
     await page.click('.normal-sidebar-nav-link.achievements-link');
   });
-
-export {};

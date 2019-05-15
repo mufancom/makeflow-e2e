@@ -30,5 +30,3 @@ turning
 
     await page.waitForNavigation();
   });
-
-export {};

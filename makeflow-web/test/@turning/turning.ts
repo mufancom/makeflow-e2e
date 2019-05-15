@@ -17,6 +17,15 @@ export interface TurningContext {
   idea: {
     active: string[];
   };
+  task?: {
+    numericId: string;
+    brief: string;
+  };
 }
 
-export const turning = new Turning<TurningContext>({describe, test});
+export const turning = new Turning<TurningContext>({
+  describe,
+  test,
+});
+
+turning.pattern({not: 'modal:*'});

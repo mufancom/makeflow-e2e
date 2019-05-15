@@ -5,5 +5,3 @@ turning.define('session:logged-in');
 
 turning.define('session:organization-created');
 turning.define('session:organization-selected');
-
-export {};

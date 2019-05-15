@@ -7,7 +7,9 @@ turning.define('app:workbench').test(async () => {
 });
 
 turning
-  .spawn(['app'])
+  .spawn([], {
+    match: ['app', {not: 'app:*'}],
+  })
   .to(['app:workbench', 'app:sidebar:default'])
   .by('clicking header logo', async context => {
     await page.click('.header-logo');
@@ -16,7 +18,9 @@ turning
   });
 
 turning
-  .turn(['app'])
+  .turn([], {
+    match: ['app', {not: 'app:*'}],
+  })
   .to(['app:workbench', 'app:sidebar:default'])
   .alias('restore app workbench page')
   .manual()
@@ -25,5 +29,3 @@ turning
 
     return _.cloneDeep(context);
   });
-
-export {};
