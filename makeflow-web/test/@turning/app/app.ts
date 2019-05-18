@@ -1,6 +1,6 @@
 import {turning} from '../turning';
 
-turning.define('app').test(async () => {
+turning.define('app').test(async ({page}) => {
   await page.waitFor('#app > .sidebar');
 });
 
@@ -9,7 +9,7 @@ turning
   .to(['website:login'])
   .alias('click app logout link')
   .manual()
-  .by('clicking logout link', async () => {
+  .by('clicking logout link', async ({page}) => {
     await expect(page).toClick('.header-menu');
     await expect(page).toClick('.ui-dropdown-item', {text: '退出登录'});
 

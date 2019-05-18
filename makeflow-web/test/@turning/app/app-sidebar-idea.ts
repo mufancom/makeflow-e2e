@@ -6,7 +6,7 @@ import {turning} from '../turning';
 
 turning
   .define('app:sidebar:idea')
-  .test(async ({idea: {active: activeIdeaTexts}}) => {
+  .test(async ({page, idea: {active: activeIdeaTexts}}) => {
     await page.waitFor('.expanded-sidebar .idea');
 
     for (let text of activeIdeaTexts) {
@@ -19,14 +19,14 @@ turning
     match: {not: 'app:sidebar:idea'},
   })
   .to(['app:sidebar:idea'])
-  .by('clicking sidebar idea link', async () => {
+  .by('clicking sidebar idea link', async ({page}) => {
     await page.click('.normal-sidebar-nav-link.idea-link');
   });
 
 turning
   .turn(['app:sidebar:idea'])
   .to(['app:sidebar:default'])
-  .by('clicking sidebar idea link', async () => {
+  .by('clicking sidebar idea link', async ({page}) => {
     await page.click('.normal-sidebar-nav-link.idea-link');
   });
 
@@ -36,11 +36,11 @@ turning
   })
   .to([])
   .by('creating a new idea', async context => {
-    context = _.cloneDeep(context);
+    let {page} = context;
 
     let text = lorem.sentence();
 
-    await page.type('.idea-list > .idea-list-new-item input', `${text}\n`);
+    await page.type('.idea-list .idea-list-new-item input', `${text}\n`);
 
     await waitForSyncing(page);
 

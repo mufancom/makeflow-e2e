@@ -1,6 +1,6 @@
 import {turning} from '../turning';
 
-turning.define('website:login').test(async () => {
+turning.define('website:login').test(async ({page}) => {
   await page.waitFor('.login-view');
 });
 
@@ -10,7 +10,7 @@ turning
   })
   .to(['website:login'])
   .alias('click login button on home page')
-  .by('clicking login button', async () => {
+  .by('clicking login button', async ({page}) => {
     await page.click('.login-button');
   });
 
@@ -21,6 +21,7 @@ turning
   .to(['app', 'session:logged-in', 'session:organization-selected'])
   .alias('submit login form')
   .by('submitting login form', async context => {
+    let {page} = context;
     let {mobile, password} = context.account!;
 
     await expect(page).toFill('input[name="mobile"]', mobile);

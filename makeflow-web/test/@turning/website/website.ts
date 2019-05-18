@@ -1,31 +1,33 @@
-import {WEBSITE_LOGOUT_URL, WEBSITE_URL} from '../../@urls';
+import {WEBSITE_URL} from '../../@urls';
 import {USER_CONTEXT_A} from '../../@users';
-import {createContext} from '../../@utils';
+import {createContextWithoutPage} from '../../@utils';
 import {turning} from '../turning';
 
-turning.define('website:home').test(async () => {
+turning.define('website:home').test(async ({page}) => {
   await page.waitFor('.home-view');
 });
 
 turning
   .initialize(['website:home'])
   .alias('goto home page')
-  .by('goto', async () => {
-    await page.goto(WEBSITE_LOGOUT_URL);
+  .by('goto', async ({browserContext}) => {
+    let page = await browserContext.newPage();
+
     await page.goto(WEBSITE_URL);
 
-    return createContext();
+    return {page, ...createContextWithoutPage()};
   });
 
 turning
   .initialize(['website:home'])
   .alias('goto home page (user A not registered)')
   .manual()
-  .by('goto', async () => {
-    await page.goto(WEBSITE_LOGOUT_URL);
+  .by('goto', async ({browserContext}) => {
+    let page = await browserContext.newPage();
+
     await page.goto(WEBSITE_URL);
 
-    return USER_CONTEXT_A;
+    return {page, ...USER_CONTEXT_A};
   });
 
 turning
@@ -36,9 +38,10 @@ turning
     'user:specified',
   ])
   .alias('goto home page (user A registered)')
-  .by('goto', async () => {
-    await page.goto(WEBSITE_LOGOUT_URL);
+  .by('goto', async ({browserContext}) => {
+    let page = await browserContext.newPage();
+
     await page.goto(WEBSITE_URL);
 
-    return USER_CONTEXT_A;
+    return {page, ...USER_CONTEXT_A};
   });

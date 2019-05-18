@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import {Page} from 'puppeteer';
+import {OmitValueOfKey} from 'tslang';
 import * as v from 'villa';
 
 import {TurningContext} from './@turning';
@@ -18,9 +19,11 @@ export function generateRandomMobile(): string {
     .padStart(8, '0')}`;
 }
 
-export function createContext(
-  partial: Partial<TurningContext> = {},
-): TurningContext {
+export type TurningContextWithoutPage = OmitValueOfKey<TurningContext, 'page'>;
+
+export function createContextWithoutPage(
+  partial: Partial<TurningContextWithoutPage> = {},
+): TurningContextWithoutPage {
   return {
     idea: {
       active: [],

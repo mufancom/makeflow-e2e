@@ -1,6 +1,6 @@
-import {createContext, generateRandomMobile} from './@utils';
+import {createContextWithoutPage, generateRandomMobile} from './@utils';
 
-export const USER_CONTEXT_A = createContext({
+export const USER_CONTEXT_A = createContextWithoutPage({
   account: {
     mobile: generateRandomMobile(),
     password: 'abc123',
