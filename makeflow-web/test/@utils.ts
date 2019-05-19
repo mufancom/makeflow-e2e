@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import {Page} from 'puppeteer';
+import {Page} from 'puppeteer-core';
 import {OmitValueOfKey} from 'tslang';
 import * as v from 'villa';
 

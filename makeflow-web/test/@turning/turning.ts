@@ -1,6 +1,15 @@
 import * as ChromePaths from 'chrome-paths';
-import {Browser, BrowserContext, Page, launch} from 'puppeteer';
+import {
+  Browser,
+  BrowserContext,
+  BrowserOptions,
+  Page,
+  connect,
+  launch,
+} from 'puppeteer-core';
 import {Turning} from 'turning';
+
+const {CI, REMOTE_USERNAME} = process.env;
 
 export interface TurningContext {
   page: Page;
@@ -34,13 +43,22 @@ export interface TurningEnvironment {
 export const turning = new Turning<TurningContext, TurningEnvironment>();
 
 turning.setup(async () => {
-  let browser = await launch({
-    headless: !!process.env.CI,
-    executablePath: ChromePaths.chrome,
+  let browserOptions: BrowserOptions = {
     // tslint:disable-next-line: no-null-keyword
     defaultViewport: null,
-    args: ['--disable-infobars'],
-  });
+  };
+
+  let browser = REMOTE_USERNAME
+    ? await connect({
+        browserURL: 'http://localhost:9222',
+        ...browserOptions,
+      })
+    : await launch({
+        headless: !!CI,
+        executablePath: ChromePaths.chrome,
+        args: ['--disable-infobars'],
+        ...browserOptions,
+      });
 
   return {
     browser,

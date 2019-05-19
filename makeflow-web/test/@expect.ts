@@ -3,5 +3,8 @@ import expect from 'expect';
 
 (global as any).expect = expect;
 
-// tslint:disable-next-line: no-var-requires
-import 'expect-puppeteer';
+import {setDefaultOptions} from 'expect-puppeteer';
+
+setDefaultOptions({
+  timeout: 1000,
+});

@@ -12,23 +12,9 @@ turning
   })
   .to(['app:workbench', 'app:sidebar:default'])
   .by('clicking header logo', async ({page, ...restContext}) => {
-    await page.click('.header-logo');
-
-    return {
-      page,
-      ..._.cloneDeep(restContext),
-    };
-  });
-
-turning
-  .turn([], {
-    match: ['app', {not: 'app:*'}],
-  })
-  .to(['app:workbench', 'app:sidebar:default'])
-  .alias('restore app workbench page')
-  .manual()
-  .by('clicking header logo', async ({page, ...restContext}) => {
-    await page.click('.header-logo');
+    await page.evaluate(`
+      _history.push('/app');
+    `);
 
     return {
       page,
