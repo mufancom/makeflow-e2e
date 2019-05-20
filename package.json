@@ -34,7 +34,7 @@
     "tslib": "^1.9.3",
     "tslint": "^5.16.0",
     "tslint-language-service": "^0.9.9",
-    "turning": "0.1.0-wip.2",
+    "turning": "0.1.0-wip.3",
     "typescript": "3.4.5",
     "villa": "^0.3.1"
   }

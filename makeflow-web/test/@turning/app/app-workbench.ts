@@ -11,7 +11,7 @@ turning
     match: ['app', {not: 'app:*'}],
   })
   .to(['app:workbench', 'app:sidebar:default'])
-  .by('clicking header logo', async ({page, ...restContext}) => {
+  .by('pushing "/app"', async ({page, ...restContext}) => {
     await page.evaluate(`
       _history.push('/app');
     `);
@@ -21,3 +21,12 @@ turning
       ..._.cloneDeep(restContext),
     };
   });
+
+turning
+  .turn([], {
+    match: ['app', {not: 'app:*'}],
+  })
+  .to(['app:workbench', 'app:sidebar:default'])
+  .alias('transit to workbench')
+  .manual()
+  .by('doing nothing', () => {});

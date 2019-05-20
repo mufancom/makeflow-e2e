@@ -11,6 +11,8 @@ import {Turning} from 'turning';
 
 const {CI, REMOTE_USERNAME} = process.env;
 
+const REMOTE = !!REMOTE_USERNAME;
+
 export interface TurningContext {
   page: Page;
   account?: {
@@ -48,7 +50,7 @@ turning.setup(async () => {
     defaultViewport: null,
   };
 
-  let browser = REMOTE_USERNAME
+  let browser = REMOTE
     ? await connect({
         browserURL: 'http://localhost:9222',
         ...browserOptions,
@@ -67,7 +69,9 @@ turning.setup(async () => {
 });
 
 turning.teardown(async ({browser}) => {
-  await browser.close();
+  if (!REMOTE) {
+    await browser.close();
+  }
 });
 
 turning.before(async context => {
@@ -93,6 +97,6 @@ turning.case('logout user A from workbench', [
   'goto home page (user A registered)',
   'click login button on home page',
   'submit login form',
-  'restore app workbench page',
+  'transit to workbench',
   'click app logout link',
 ]);

@@ -328,7 +328,7 @@ callsites@^3.0.0:
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-3.1.0.tgz#b3630abd8943432f54b3f0519238e33cd7df2f73"
   integrity sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==
 
-chalk@^2.0.0, chalk@^2.0.1, chalk@^2.3.0:
+chalk@^2.0.0, chalk@^2.0.1, chalk@^2.3.0, chalk@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
   integrity sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==
@@ -1039,6 +1039,11 @@ nanomatch@^1.2.9:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
+node-dijkstra@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/node-dijkstra/-/node-dijkstra-2.5.0.tgz#0feb76c5a05f35b56e786de6df4d3364af28d4e8"
+  integrity sha1-D+t2xaBfNbVueG3m300zZK8o1Og=
+
 node-fetch@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.4.1.tgz#b2e38f1117b8acbedbe0524f041fb3177188255d"
@@ -1108,6 +1113,11 @@ posix-character-classes@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
   integrity sha1-AerA/jta9xoqbAL+q7jB/vfgDqs=
+
+prando@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/prando/-/prando-5.1.0.tgz#f0aab737ba0c356e2f2f9e3088b9118e42b05f51"
+  integrity sha512-UkXcaSqEoMz2S5O/uhb9emINjP1qM9vClszDSPCIVhI7s696tVCNS5qbm5b7qSwMlpLS3rih4NHFZdPzwHTtSQ==
 
 prettier@^1.17.0:
   version "1.17.0"
@@ -1454,14 +1464,18 @@ tsutils@^2.28.0, tsutils@^2.29.0:
   dependencies:
     tslib "^1.8.1"
 
-turning@0.1.0-wip.2:
-  version "0.1.0-wip.2"
-  resolved "https://registry.yarnpkg.com/turning/-/turning-0.1.0-wip.2.tgz#28c8a3841bae7deda8e91d3c12e8780bff95daf7"
-  integrity sha512-iHEYGhF7sAEyiMR0a5PaNXPfyocQ6NfnEeMLVvOtNSJbxUcpTegmA1RvqltDk4Ltbkjc1zEUrRfXUhR++bwQNg==
+turning@0.1.0-wip.3:
+  version "0.1.0-wip.3"
+  resolved "https://registry.yarnpkg.com/turning/-/turning-0.1.0-wip.3.tgz#d134b9ccf05c1812e5e1f9409e50f985b9350a68"
+  integrity sha512-myiuXg4bjagNkG/eCfmIc4vZ6o1FAHy97DasftJ40zJReEjpdXJYmeLEPZwxLrfwWgou6sLWrG1nj0lLa4DqSQ==
   dependencies:
+    chalk "^2.4.2"
     lodash "^4.17.11"
     micromatch "^4.0.2"
+    node-dijkstra "^2.5.0"
+    prando "^5.1.0"
     tslang "^0.1.13"
+    villa "^0.3.1"
 
 type-fest@^0.3.0:
   version "0.3.1"
