@@ -24,6 +24,7 @@ build-makeflow-e2e:
   extends: .node_modules_cache_pull
   stage: build
   script:
+    - echo test
 
 build-makeflow-web:
   extends: .node_modules_cache_pull
