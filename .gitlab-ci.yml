@@ -34,3 +34,5 @@ build-makeflow-web:
 
 test:
   stage: test
+  script:
+    - echo test
