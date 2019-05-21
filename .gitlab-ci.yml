@@ -23,6 +23,7 @@ install:
 build-makeflow-e2e:
   extends: .node_modules_cache_pull
   stage: build
+  script:
 
 build-makeflow-web:
   extends: .node_modules_cache_pull
