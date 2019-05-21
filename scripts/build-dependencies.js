@@ -21,9 +21,11 @@ async function buildProject({id, branch}) {
   await trigger();
 
   async function trigger() {
+    let url = `${CI_API_V4_URL}/projects/${id}/pipeline?ref=${branch}`;
+
     let response = await fetch({
       method: 'POST',
-      url: `${CI_API_V4_URL}/projects/${id}/pipeline?ref=${branch}`,
+      url,
       headers: {
         'PRIVATE-TOKEN': CI_JOB_TOKEN,
       },
