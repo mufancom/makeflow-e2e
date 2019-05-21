@@ -25,9 +25,8 @@ async function buildProject({id, branch}) {
 
     console.log(url);
 
-    let response = await fetch({
+    let response = await fetch(url, {
       method: 'POST',
-      url,
       headers: {
         'PRIVATE-TOKEN': CI_JOB_TOKEN,
       },
