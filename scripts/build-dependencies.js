@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 const {main} = require('main-function');
 const v = require('villa');
 
-const {CI_API_V4_URL, CI_JOB_TOKEN} = process.env;
+const {CI_API_V4_URL, PRIVATE_TOKEN} = process.env;
 
 const PROJECTS = [
   {
@@ -28,7 +28,7 @@ async function buildProject({id, branch}) {
     let response = await fetch(url, {
       method: 'POST',
       headers: {
-        'CI-JOB-TOKEN': CI_JOB_TOKEN,
+        'PRIVATE-TOKEN': PRIVATE_TOKEN,
       },
     });
 
