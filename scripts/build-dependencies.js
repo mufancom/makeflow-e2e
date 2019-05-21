@@ -23,6 +23,8 @@ async function buildProject({id, branch}) {
   async function trigger() {
     let url = `${CI_API_V4_URL}/projects/${id}/pipeline?ref=${branch}`;
 
+    console.log(url);
+
     let response = await fetch({
       method: 'POST',
       url,
