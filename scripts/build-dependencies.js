@@ -8,6 +8,7 @@ const {CI_API_V4_URL, PRIVATE_TOKEN} = process.env;
 
 const PROJECTS = [
   {
+    name: 'makeflow-web',
     id: 21,
     branch: 'master',
   },
@@ -24,6 +25,8 @@ async function buildProject({id, branch}) {
     let url = `${CI_API_V4_URL}/projects/${id}/pipeline?ref=${branch}`;
 
     console.log(url);
+
+    console.log('PRIVATE_TOKEN', PRIVATE_TOKEN);
 
     let response = await fetch(url, {
       method: 'POST',
