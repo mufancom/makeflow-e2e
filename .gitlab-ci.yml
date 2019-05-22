@@ -4,4 +4,4 @@ stages:
 test:
   stage: test
   script:
-    - docker-compose --file $TEST_PROJECT/docker-compose.yml up --exit-code-from makeflow-e2e
+    - docker-compose up --exit-code-from makeflow-e2e
