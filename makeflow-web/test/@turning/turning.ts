@@ -58,7 +58,11 @@ turning.setup(async () => {
     : await launch({
         headless: !!CI,
         executablePath: ChromePaths.chrome || ChromePaths.chromium,
-        args: ['--disable-infobars'],
+        args: [
+          '--disable-infobars',
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+        ],
         ...browserOptions,
       });
 

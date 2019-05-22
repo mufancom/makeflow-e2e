@@ -13,9 +13,9 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
   && apt-get install -y google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst ttf-freefont \
   --no-install-recommends
 
-ENV http_proxy=
-ENV https_proxy=
-
 COPY . /app
 
 RUN yarn install
+
+ENV http_proxy=
+ENV https_proxy=
