@@ -13,6 +13,8 @@ turning
   .by('goto', async ({browserContext}) => {
     let page = await browserContext.newPage();
 
+    page.on('console', message => console.log(message.text()));
+
     await page.goto(WEBSITE_URL);
 
     return {page, ...createContextWithoutPage()};
@@ -24,6 +26,8 @@ turning
   .manual()
   .by('goto', async ({browserContext}) => {
     let page = await browserContext.newPage();
+
+    page.on('console', message => console.log(message.text()));
 
     await page.goto(WEBSITE_URL);
 
@@ -40,6 +44,8 @@ turning
   .alias('goto home page (user A registered)')
   .by('goto', async ({browserContext}) => {
     let page = await browserContext.newPage();
+
+    page.on('console', message => console.log(message.text()));
 
     await page.goto(WEBSITE_URL);
 
