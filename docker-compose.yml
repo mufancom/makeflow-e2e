@@ -41,7 +41,10 @@ services:
       - FCM_APPLICATION_PUBLIC_KEY
       - FCM_APPLICATION_PRIVATE_KEY
   makeflow-e2e:
-    build: .
+    build:
+      context: .
+      args:
+        proxy: ${PROXY}
     depends_on:
       - makeflow-web-server
       - makeflow-web-consumer
