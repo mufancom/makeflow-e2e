@@ -6,6 +6,8 @@ import {
   Page,
   connect,
   launch,
+  ConnectOptions,
+  LaunchOptions,
 } from 'puppeteer-core';
 import {Turning} from 'turning';
 
@@ -37,9 +39,51 @@ export interface TurningContext {
   };
 }
 
-export interface TurningEnvironment {
-  browser: Browser;
-  browserContext: BrowserContext;
+export interface TurningEnvironmentOptions {
+  connect?: ConnectOptions;
+  launch?: LaunchOptions;
+}
+
+export class TurningEnvironment {
+  browser!: Browser;
+  browserContext!: BrowserContext;
+
+  private connectOptions: ConnectOptions | undefined;
+  private launchOptions: LaunchOptions | undefined;
+
+  constructor({
+    connect: connectOptions,
+    launch: launchOptions,
+  }: TurningEnvironmentOptions) {
+    this.connectOptions = connectOptions;
+    this.launchOptions = launchOptions;
+  }
+
+  async setup(): Promise<void> {
+    if (this.connectOptions) {
+      this.browser = await connect(this.connectOptions);
+    } else {
+      this.browser = await launch(this.launchOptions);
+    }
+  }
+
+  async teardown(): Promise<void> {
+    if (!this.connectOptions) {
+      this.browser.close();
+    }
+  }
+
+  async before(): Promise<void> {
+    this.browserContext = await this.browser.createIncognitoBrowserContext();
+  }
+
+  async after(): Promise<void> {
+    await this.browserContext.close();
+  }
+
+  async newPage(): Promise<Page> {
+    return this.browserContext.newPage();
+  }
 }
 
 export const turning = new Turning<TurningContext, TurningEnvironment>();
@@ -50,40 +94,43 @@ turning.setup(async () => {
     defaultViewport: null,
   };
 
-  let browser = REMOTE
-    ? await connect({
-        browserURL: 'http://localhost:9222',
-        ...browserOptions,
-      })
-    : await launch({
-        headless: !!CI,
-        executablePath: ChromePaths.chrome || ChromePaths.chromium,
-        args: [
-          '--disable-infobars',
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-        ],
-        ...browserOptions,
-      });
+  let options = REMOTE
+    ? {
+        connect: {
+          browserURL: 'http://localhost:9222',
+          ...browserOptions,
+        },
+      }
+    : {
+        launch: {
+          headless: !!CI,
+          executablePath: ChromePaths.chrome || ChromePaths.chromium,
+          args: [
+            '--disable-infobars',
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+          ],
+          ...browserOptions,
+        },
+      };
 
-  return {
-    browser,
-    browserContext: undefined!,
-  };
+  let environment = new TurningEnvironment(options);
+
+  await environment.setup();
+
+  return environment;
 });
 
-turning.teardown(async ({browser}) => {
-  if (!REMOTE) {
-    await browser.close();
-  }
+turning.teardown(async environment => {
+  await environment.teardown();
 });
 
-turning.before(async context => {
-  context.browserContext = await context.browser.createIncognitoBrowserContext();
+turning.before(async environment => {
+  await environment.before();
 });
 
-turning.after(async context => {
-  await context.browserContext.close();
+turning.after(async environment => {
+  await environment.after();
 });
 
 turning.pattern({not: 'modal:*'});

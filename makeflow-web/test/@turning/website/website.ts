@@ -10,10 +10,8 @@ turning.define('website:home').test(async ({page}) => {
 turning
   .initialize(['website:home'])
   .alias('goto home page')
-  .by('goto', async ({browserContext}) => {
-    let page = await browserContext.newPage();
-
-    page.on('console', message => console.log(...message.args()));
+  .by('goto', async environment => {
+    let page = await environment.newPage();
 
     await page.goto(WEBSITE_URL);
 
@@ -24,10 +22,8 @@ turning
   .initialize(['website:home'])
   .alias('goto home page (user A not registered)')
   .manual()
-  .by('goto', async ({browserContext}) => {
-    let page = await browserContext.newPage();
-
-    page.on('console', message => console.log(...message.args()));
+  .by('goto', async environment => {
+    let page = await environment.newPage();
 
     await page.goto(WEBSITE_URL);
 
@@ -42,10 +38,8 @@ turning
     'user:specified',
   ])
   .alias('goto home page (user A registered)')
-  .by('goto', async ({browserContext}) => {
-    let page = await browserContext.newPage();
-
-    page.on('console', message => console.log(...message.args()));
+  .by('goto', async environment => {
+    let page = await environment.newPage();
 
     await page.goto(WEBSITE_URL);
 
