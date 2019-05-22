@@ -5,6 +5,8 @@ import './@expect';
 import {turning} from './@turning';
 
 main(async () => {
+  await new Promise<never>(() => {});
+
   let passed = await turning.test({
     bail: true,
     maxAttempts: 3,
@@ -12,3 +14,5 @@ main(async () => {
 
   return passed ? 0 : 1;
 });
+
+setInterval(() => {}, 1000);
