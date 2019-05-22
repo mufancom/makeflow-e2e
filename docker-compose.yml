@@ -48,4 +48,6 @@ services:
     depends_on:
       - makeflow-web-server
       - makeflow-web-consumer
+    environment:
+      - CI
     command: yarn test:${TEST_PROJECT}
