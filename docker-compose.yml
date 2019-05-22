@@ -49,5 +49,6 @@ services:
       - makeflow-web-server
       - makeflow-web-consumer
     environment:
+      - ENVIRONMENT=e2e
       - CI
     command: yarn test:${TEST_PROJECT}
