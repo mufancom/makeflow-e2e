@@ -13,7 +13,7 @@ turning
   .by('goto', async ({browserContext}) => {
     let page = await browserContext.newPage();
 
-    page.on('console', message => console.log(message.text()));
+    page.on('console', message => console.log(message.args().join()));
 
     await page.goto(WEBSITE_URL);
 
@@ -27,7 +27,7 @@ turning
   .by('goto', async ({browserContext}) => {
     let page = await browserContext.newPage();
 
-    page.on('console', message => console.log(message.text()));
+    page.on('console', message => console.log(message.args().join()));
 
     await page.goto(WEBSITE_URL);
 
@@ -45,7 +45,7 @@ turning
   .by('goto', async ({browserContext}) => {
     let page = await browserContext.newPage();
 
-    page.on('console', message => console.log(message.text()));
+    page.on('console', message => console.log(message.args().join()));
 
     await page.goto(WEBSITE_URL);
 
