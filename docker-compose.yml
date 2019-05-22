@@ -45,3 +45,4 @@ services:
     depends_on:
       - makeflow-web-server
       - makeflow-web-consumer
+    command: yarn test:${TEST_PROJECT}

@@ -1,6 +1,8 @@
-export const PORT = process.env.MAKEFLOW_E2E_PORT || 8080;
+const {ENVIRONMENT, PORT = '8080'} = process.env;
 
-export const BASE_URL = `http://localhost:${PORT}`;
+const HOST = ENVIRONMENT === 'e2e' ? 'makeflow-e2e' : 'localhost';
+
+export const BASE_URL = `http://${HOST}:${PORT}`;
 
 /////////////
 // Website //
