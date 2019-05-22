@@ -4,6 +4,9 @@ services:
     image: mongo:latest
   redis:
     image: redis:latest
+  redis-client:
+    image: redis:latest
+    command: redis-cli -h redis ping
   zookeeper:
     image: zookeeper:latest
   proxy:
