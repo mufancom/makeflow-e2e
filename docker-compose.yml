@@ -1,0 +1,47 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:latest
+  redis:
+    image: redis:latest
+  zookeeper:
+    image: zookeeper:latest
+  proxy:
+    image: proxy-v2ray:latest
+  makeflow-web-server:
+    image: makeflow-web-e2e:latest
+    depends_on:
+      - mongo
+      - redis
+      - zookeeper
+      - proxy
+    environment:
+      - APPLICATION=main
+      - ENVIRONMENT=e2e
+      - COOKIE_SECRET_KEYS
+      - OSS_KEY
+      - OSS_SECRET
+      - FIREBASE_SERVER_KEY
+      - FCM_APPLICATION_PUBLIC_KEY
+      - FCM_APPLICATION_PRIVATE_KEY
+  makeflow-web-consumer:
+    image: makeflow-web-e2e:latest
+    depends_on:
+      - mongo
+      - redis
+      - zookeeper
+      - proxy
+    environment:
+      - APPLICATION=consumer
+      - ENVIRONMENT=e2e
+      - COOKIE_SECRET_KEYS
+      - OSS_KEY
+      - OSS_SECRET
+      - FIREBASE_SERVER_KEY
+      - FCM_APPLICATION_PUBLIC_KEY
+      - FCM_APPLICATION_PRIVATE_KEY
+  makeflow-e2e:
+    build: .
+    depends_on:
+      - makeflow-web-server
+      - makeflow-web-consumer
