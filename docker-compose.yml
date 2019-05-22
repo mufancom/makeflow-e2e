@@ -67,4 +67,5 @@ services:
       - ENVIRONMENT=e2e
       - CI
     command: yarn test:${TEST_PROJECT}
-networks: webnet:
+networks:
+  webnet:
