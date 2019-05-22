@@ -5,3 +5,6 @@ test:
   stage: test
   script:
     - docker-compose up --exit-code-from makeflow-e2e
+  only:
+    variables:
+      - $TEST_PROJECT

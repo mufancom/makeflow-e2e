@@ -4,8 +4,7 @@
   "scripts": {
     "lint-prettier": "prettier --list-different \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "lint-ts:makeflow-web": "tslint --project makeflow-web/test && tslint --project makeflow-web/scripts",
-    "test:makeflow-web": "ts-node --files --project makeflow-web/test/tsconfig.json makeflow-web/test/test.ts",
-    "test": "yarn test:makeflow-web"
+    "test:makeflow-web": "ts-node --files --project makeflow-web/test/tsconfig.json makeflow-web/test/test.ts"
   },
   "devDependencies": {
     "@magicspace/configs": "^0.1.48",
