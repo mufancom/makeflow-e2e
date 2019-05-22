@@ -1,4 +1,3 @@
-import * as ChromePaths from 'chrome-paths';
 import {
   Browser,
   BrowserContext,
@@ -6,7 +5,7 @@ import {
   Page,
   connect,
   launch,
-} from 'puppeteer-core';
+} from 'puppeteer';
 import {Turning} from 'turning';
 
 const {CI, REMOTE_USERNAME} = process.env;
@@ -57,7 +56,6 @@ turning.setup(async () => {
       })
     : await launch({
         headless: !!CI,
-        executablePath: ChromePaths.chrome,
         args: ['--disable-infobars'],
         ...browserOptions,
       });
