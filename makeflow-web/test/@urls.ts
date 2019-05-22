@@ -1,6 +1,6 @@
 const {ENVIRONMENT, PORT = '8080'} = process.env;
 
-const HOST = ENVIRONMENT === 'e2e' ? 'makeflow-e2e' : 'localhost';
+const HOST = ENVIRONMENT === 'e2e' ? 'makeflow-web-server' : 'localhost';
 
 export const BASE_URL = `http://${HOST}:${PORT}`;
 
