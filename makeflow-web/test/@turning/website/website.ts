@@ -13,7 +13,9 @@ turning
   .by('goto', async ({browserContext}) => {
     let page = await browserContext.newPage();
 
-    page.on('console', message => console.log(message.args().join()));
+    page.on('console', message =>
+      Promise.all(message.args().map(arg => arg.jsonValue())).then(console.log),
+    );
 
     await page.goto(WEBSITE_URL);
 
@@ -27,7 +29,9 @@ turning
   .by('goto', async ({browserContext}) => {
     let page = await browserContext.newPage();
 
-    page.on('console', message => console.log(message.args().join()));
+    page.on('console', message =>
+      Promise.all(message.args().map(arg => arg.jsonValue())).then(console.log),
+    );
 
     await page.goto(WEBSITE_URL);
 
@@ -45,7 +49,9 @@ turning
   .by('goto', async ({browserContext}) => {
     let page = await browserContext.newPage();
 
-    page.on('console', message => console.log(message.args().join()));
+    page.on('console', message =>
+      Promise.all(message.args().map(arg => arg.jsonValue())).then(console.log),
+    );
 
     await page.goto(WEBSITE_URL);
 
