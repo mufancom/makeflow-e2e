@@ -152,7 +152,14 @@
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-10.14.7.tgz#1854f0a9aa8d2cd6818d607b3d091346c6730362"
   integrity sha1-GFTwqaqNLNaBjWB7PQkTRsZzA2I=
 
-"@types/puppeteer@*", "@types/puppeteer@^1.12.4":
+"@types/puppeteer-core@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.npm.taobao.org/@types/puppeteer-core/download/@types/puppeteer-core-1.9.0.tgz#5ceb397e3ff769081fb07d71289b5009392d24d3"
+  integrity sha1-XOs5fj/3aQgfsH1xKJtQCTktJNM=
+  dependencies:
+    "@types/puppeteer" "*"
+
+"@types/puppeteer@*":
   version "1.12.4"
   resolved "https://registry.npm.taobao.org/@types/puppeteer/download/@types/puppeteer-1.12.4.tgz#8388efdb0b30a54a7e7c4831ca0d709191d77ff1"
   integrity sha1-g4jv2wswpUp+fEgxyg1wkZHXf/E=
@@ -1142,10 +1149,10 @@ proxy-from-env@^1.0.0:
   resolved "https://registry.npm.taobao.org/proxy-from-env/download/proxy-from-env-1.0.0.tgz#33c50398f70ea7eb96d21f7b817630a55791c7ee"
   integrity sha1-M8UDmPcOp+uW0h97gXYwpVeRx+4=
 
-puppeteer@^1.16.0:
+puppeteer-core@^1.16.0:
   version "1.16.0"
-  resolved "https://registry.npm.taobao.org/puppeteer/download/puppeteer-1.16.0.tgz#4b763d9ff4e69a4bb7a031c3393534214d54f27e"
-  integrity sha1-S3Y9n/Tmmku3oDHDOTU0IU1U8n4=
+  resolved "https://registry.npm.taobao.org/puppeteer-core/download/puppeteer-core-1.16.0.tgz#e1d3123c1fef8aaf55f8e90a3740429f839510ca"
+  integrity sha1-4dMSPB/viq9V+OkKN0BCn4OVEMo=
   dependencies:
     debug "^4.1.0"
     extract-zip "^1.6.6"
