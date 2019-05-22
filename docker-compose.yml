@@ -40,7 +40,7 @@ services:
       - FIREBASE_SERVER_KEY
       - FCM_APPLICATION_PUBLIC_KEY
       - FCM_APPLICATION_PRIVATE_KEY
-  makeflow-e2e:
+  test:
     build:
       context: .
       args:
