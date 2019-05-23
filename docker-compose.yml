@@ -2,14 +2,24 @@ version: '3'
 services:
   mongo:
     image: mongo:latest
+    networks:
+      - webnet
   redis:
     image: redis:latest
+    networks:
+      - webnet
   zookeeper:
     image: zookeeper:latest
+    networks:
+      - webnet
   proxy:
     image: proxy-v2ray:latest
+    networks:
+      - webnet
   makeflow-web-server:
     image: makeflow-web-e2e:latest
+    networks:
+      - webnet
     depends_on:
       - mongo
       - redis
@@ -26,6 +36,8 @@ services:
       - FCM_APPLICATION_PRIVATE_KEY
   makeflow-web-consumer:
     image: makeflow-web-e2e:latest
+    networks:
+      - webnet
     depends_on:
       - mongo
       - redis
@@ -45,6 +57,8 @@ services:
       context: .
       args:
         proxy: ${PROXY}
+    networks:
+      - webnet
     depends_on:
       - makeflow-web-server
       - makeflow-web-consumer
@@ -52,3 +66,5 @@ services:
       - ENVIRONMENT=e2e
       - CI
     command: yarn test:${TEST_PROJECT}
+networks:
+  webnet:
