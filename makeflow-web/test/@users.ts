@@ -1,6 +1,6 @@
-import {createContextWithoutPage, generateRandomMobile} from './@utils';
+import {createTurningContextData, generateRandomMobile} from './@utils';
 
-export const USER_CONTEXT_A = createContextWithoutPage({
+export const USER_CONTEXT_A = createTurningContextData({
   account: {
     mobile: generateRandomMobile(),
     password: 'abc123',

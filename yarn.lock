@@ -1464,10 +1464,10 @@ tsutils@^2.28.0, tsutils@^2.29.0:
   dependencies:
     tslib "^1.8.1"
 
-turning@0.1.0-wip.3:
-  version "0.1.0-wip.3"
-  resolved "https://registry.npm.taobao.org/turning/download/turning-0.1.0-wip.3.tgz#d134b9ccf05c1812e5e1f9409e50f985b9350a68"
-  integrity sha1-0TS5zPBcGBLl4flAnlD5hbk1Cmg=
+turning@0.1.0-wip.4:
+  version "0.1.0-wip.4"
+  resolved "https://registry.npm.taobao.org/turning/download/turning-0.1.0-wip.4.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fturning%2Fdownload%2Fturning-0.1.0-wip.4.tgz#5c17f57ab30a899607f19f190df777d0f4277ef6"
+  integrity sha1-XBf1erMKiZYH8Z8ZDfd30PQnfvY=
   dependencies:
     chalk "^2.4.2"
     lodash "^4.17.11"

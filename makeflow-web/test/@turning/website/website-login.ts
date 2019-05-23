@@ -20,9 +20,8 @@ turning
   })
   .to(['app', 'session:logged-in', 'session:organization-selected'])
   .alias('submit login form')
-  .by('submitting login form', async context => {
-    let {page} = context;
-    let {mobile, password} = context.account!;
+  .by('submitting login form', async ({page, data}) => {
+    let {mobile, password} = data.account!;
 
     await expect(page).toFill('input[name="mobile"]', mobile);
     await expect(page).toFill('input[name="password"]', password);

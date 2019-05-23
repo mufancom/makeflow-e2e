@@ -11,15 +11,10 @@ turning
     match: ['app', {not: 'app:*'}],
   })
   .to(['app:workbench', 'app:sidebar:default'])
-  .by('pushing "/app"', async ({page, ...restContext}) => {
+  .by('pushing "/app"', async ({page}) => {
     await page.evaluate(`
       _history.push('/app');
     `);
-
-    return {
-      page,
-      ..._.cloneDeep(restContext),
-    };
   });
 
 turning

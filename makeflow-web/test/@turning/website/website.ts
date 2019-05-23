@@ -1,7 +1,7 @@
 import {WEBSITE_URL} from '../../@urls';
 import {USER_CONTEXT_A} from '../../@users';
-import {createContextWithoutPage} from '../../@utils';
-import {turning} from '../turning';
+import {createTurningContextData} from '../../@utils';
+import {TurningContext, turning} from '../turning';
 
 turning.define('website:home').test(async ({page}) => {
   await page.waitFor('.home-view');
@@ -15,7 +15,7 @@ turning
 
     await page.goto(WEBSITE_URL);
 
-    return {page, ...createContextWithoutPage()};
+    return new TurningContext(page, createTurningContextData());
   });
 
 turning
@@ -27,7 +27,7 @@ turning
 
     await page.goto(WEBSITE_URL);
 
-    return {page, ...USER_CONTEXT_A};
+    return new TurningContext(page, USER_CONTEXT_A);
   });
 
 turning
@@ -43,5 +43,5 @@ turning
 
     await page.goto(WEBSITE_URL);
 
-    return {page, ...USER_CONTEXT_A};
+    return new TurningContext(page, USER_CONTEXT_A);
   });

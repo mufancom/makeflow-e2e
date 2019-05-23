@@ -6,7 +6,7 @@ import {turning} from '../turning';
 
 turning
   .define('app:sidebar:idea')
-  .test(async ({page, idea: {active: activeIdeaTexts}}) => {
+  .test(async ({page, data: {idea: {active: activeIdeaTexts}}}) => {
     await page.waitFor('.expanded-sidebar .idea');
 
     for (let text of activeIdeaTexts) {
@@ -36,7 +36,7 @@ turning
   })
   .to([])
   .by('creating a new idea', async context => {
-    let {page} = context;
+    let {page, data} = context;
 
     let text = lorem.sentence();
 
@@ -44,9 +44,7 @@ turning
 
     await waitForSyncing(page);
 
-    context.idea = context.idea || {activeIdeas: []};
+    data.idea = data.idea || {activeIdeas: []};
 
-    context.idea.active.push(text);
-
-    return context;
+    data.idea.active.push(text);
   });

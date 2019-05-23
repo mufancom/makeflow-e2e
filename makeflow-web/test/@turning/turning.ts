@@ -1,22 +1,26 @@
 import * as ChromePaths from 'chrome-paths';
+import _ from 'lodash';
 import {
   Browser,
   BrowserContext,
   BrowserOptions,
+  ConnectOptions,
+  LaunchOptions,
   Page,
   connect,
   launch,
-  ConnectOptions,
-  LaunchOptions,
 } from 'puppeteer-core';
-import {Turning} from 'turning';
+import {
+  AbstractTurningContext,
+  AbstractTurningEnvironment,
+  Turning,
+} from 'turning';
 
 const {CI, REMOTE_USERNAME} = process.env;
 
 const REMOTE = !!REMOTE_USERNAME;
 
-export interface TurningContext {
-  page: Page;
+export interface TurningContextData {
   account?: {
     mobile: string;
     password: string;
@@ -39,12 +43,26 @@ export interface TurningContext {
   };
 }
 
+export class TurningContext extends AbstractTurningContext {
+  constructor(readonly page: Page, readonly data: TurningContextData) {
+    super();
+
+    page.on('pageerror', error => this.emit('error', error));
+  }
+
+  spawn(): this {
+    return new TurningContext(this.page, _.cloneDeep(this.data)) as this;
+  }
+}
+
 export interface TurningEnvironmentOptions {
   connect?: ConnectOptions;
   launch?: LaunchOptions;
 }
 
-export class TurningEnvironment {
+export class TurningEnvironment extends AbstractTurningEnvironment<
+  TurningContext
+> {
   browser!: Browser;
   browserContext!: BrowserContext;
 
@@ -55,6 +73,8 @@ export class TurningEnvironment {
     connect: connectOptions,
     launch: launchOptions,
   }: TurningEnvironmentOptions) {
+    super();
+
     this.connectOptions = connectOptions;
     this.launchOptions = launchOptions;
   }
@@ -69,7 +89,7 @@ export class TurningEnvironment {
 
   async teardown(): Promise<void> {
     if (!this.connectOptions) {
-      this.browser.close();
+      await this.browser.close();
     }
   }
 
@@ -86,52 +106,36 @@ export class TurningEnvironment {
   }
 }
 
-export const turning = new Turning<TurningContext, TurningEnvironment>();
+const browserOptions: BrowserOptions = {
+  // tslint:disable-next-line: no-null-keyword
+  defaultViewport: null,
+};
 
-turning.setup(async () => {
-  let browserOptions: BrowserOptions = {
-    // tslint:disable-next-line: no-null-keyword
-    defaultViewport: null,
-  };
+const options = REMOTE
+  ? {
+      connect: {
+        browserURL: 'http://localhost:9222',
+        ...browserOptions,
+      },
+    }
+  : {
+      launch: {
+        headless: !!CI,
+        executablePath: ChromePaths.chrome || ChromePaths.chromium,
+        args: [
+          '--disable-infobars',
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+        ],
+        ...browserOptions,
+      },
+    };
 
-  let options = REMOTE
-    ? {
-        connect: {
-          browserURL: 'http://localhost:9222',
-          ...browserOptions,
-        },
-      }
-    : {
-        launch: {
-          headless: !!CI,
-          executablePath: ChromePaths.chrome || ChromePaths.chromium,
-          args: [
-            '--disable-infobars',
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-          ],
-          ...browserOptions,
-        },
-      };
+const environment = new TurningEnvironment(options);
 
-  let environment = new TurningEnvironment(options);
-
-  await environment.setup();
-
-  return environment;
-});
-
-turning.teardown(async environment => {
-  await environment.teardown();
-});
-
-turning.before(async environment => {
-  await environment.before();
-});
-
-turning.after(async environment => {
-  await environment.after();
-});
+export const turning = new Turning<TurningContext, TurningEnvironment>(
+  environment,
+);
 
 turning.pattern({not: 'modal:*'});
 

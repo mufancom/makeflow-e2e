@@ -1,9 +1,8 @@
 import fetch from 'node-fetch';
 import {Page} from 'puppeteer-core';
-import {OmitValueOfKey} from 'tslang';
 import * as v from 'villa';
 
-import {TurningContext} from './@turning';
+import {TurningContextData} from './@turning';
 import {API_E2E_GET_VERIFICATION_CODE_URL} from './@urls';
 
 export async function getVerificationCode(): Promise<string> {
@@ -19,11 +18,9 @@ export function generateRandomMobile(): string {
     .padStart(8, '0')}`;
 }
 
-export type TurningContextWithoutPage = OmitValueOfKey<TurningContext, 'page'>;
-
-export function createContextWithoutPage(
-  partial: Partial<TurningContextWithoutPage> = {},
-): TurningContextWithoutPage {
+export function createTurningContextData(
+  partial: Partial<TurningContextData> = {},
+): TurningContextData {
   return {
     idea: {
       active: [],
