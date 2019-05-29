@@ -1,9 +1,0 @@
-{
-  "extends": "@magicspace/configs/tsconfig.json",
-  "compilerOptions": {
-    "types": ["node"],
-
-    "rootDir": ".",
-    "noEmit": true
-  }
-}
