@@ -4,6 +4,7 @@ stages:
 test:
   stage: test
   script:
+    - docker-compose pull
     - docker-compose up --force-recreate --exit-code-from test
   only:
     variables:
