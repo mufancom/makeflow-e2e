@@ -4,7 +4,7 @@ stages:
 test:
   stage: test
   script:
-    - docker-compose up --force-recreate --remove-orphans --renew-anon-volumes --exit-code-from test
+    - docker-compose up --build --force-recreate --remove-orphans --renew-anon-volumes --exit-code-from test
   only:
     variables:
       - $TEST_PROJECT
