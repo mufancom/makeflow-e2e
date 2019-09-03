@@ -17,7 +17,7 @@ turning
     // Due to unknown reasons, `page.click()` and `expect(page).toClick()` are
     // not stable here. Might be result of re-rendering.
 
-    await page.$eval('.create-task-button button', button => button.click());
+    await page.$eval('.create-task-button', button => button.click());
   });
 
 turning
