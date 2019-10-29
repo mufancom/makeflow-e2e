@@ -16,9 +16,9 @@ import {
   Turning,
 } from 'turning';
 
-const {CI, REMOTE_USERNAME} = process.env;
+const {CI, REMOTE_USER_NAME} = process.env;
 
-const REMOTE = !!REMOTE_USERNAME;
+const REMOTE = !!REMOTE_USER_NAME;
 
 export interface TurningContextData {
   account?: {
