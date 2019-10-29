@@ -10,7 +10,7 @@ turning
   .alias('click app logout link')
   .manual()
   .by('clicking logout link', async ({page}) => {
-    await expect(page).toClick('.header-menu .toggle-more');
+    await expect(page).toClick('.header-menu .more');
     await expect(page).toClick('.ui-dropdown-item', {text: '退出登录'});
 
     await page.waitForNavigation();
