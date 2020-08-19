@@ -4,15 +4,20 @@ import _ from 'lodash';
 import {waitForSyncing} from '../../@utils';
 import {turning} from '../turning';
 
-turning
-  .define('app:sidebar:idea')
-  .test(async ({page, data: {idea: {active: activeIdeaTexts}}}) => {
+turning.define('app:sidebar:idea').test(
+  async ({
+    page,
+    data: {
+      idea: {active: activeIdeaTexts},
+    },
+  }) => {
     await page.waitFor('.expanded-sidebar .idea');
 
     for (let text of activeIdeaTexts) {
       await expect(page).toMatchElement('.idea-list-item', {text});
     }
-  });
+  },
+);
 
 turning
   .turn(['app:sidebar:*'], {

@@ -35,9 +35,11 @@ export async function pageUISelect(
   optionText: string,
 ): Promise<void> {
   await page.click(selector);
-  await (await page.$x(
-    `//*[contains(@class, "ui-default-option-component") and text()="${optionText}"]`,
-  ))[0].click();
+  await (
+    await page.$x(
+      `//*[contains(@class, "ui-default-option-component") and text()="${optionText}"]`,
+    )
+  )[0].click();
 }
 
 export async function waitForSyncing(page: Page): Promise<void> {

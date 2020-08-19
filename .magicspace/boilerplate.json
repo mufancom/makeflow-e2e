@@ -7,7 +7,9 @@
     "author": "Chengdu Mufan Technology Co., Ltd.",
     "tsProjects": [
       {
-        "name": "makeflow-web/test"
+        "name": "makeflow-web/test",
+        "type": "script",
+        "src": false
       }
     ]
   }

@@ -143,7 +143,9 @@ turning
 
     await expect(page).toMatchElement(
       `input[name="username"][value="${username}"]`,
-      {timeout: 1000},
+      {
+        timeout: 1000,
+      },
     );
 
     await page.click('.submit-button');
