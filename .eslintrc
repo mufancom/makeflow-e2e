@@ -13,6 +13,10 @@
       "parserOptions": {
         "project": "!(node_modules)/**/tsconfig.json"
       }
+    },
+    {
+      "files": ["makeflow-web/test/**/*.{ts,tsx}"],
+      "extends": ["plugin:@mufan/override-dev"]
     }
   ]
 }
