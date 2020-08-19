@@ -1,8 +1,13 @@
+import expect from 'expect-puppeteer';
 import {main} from 'main-function';
 
-import './@expect';
-
 import {turning} from './@turning';
+
+expect.setDefaultOptions({
+  timeout: 1000,
+});
+
+(global as any).expect = expect;
 
 main(async () => {
   let passed = await turning.test({

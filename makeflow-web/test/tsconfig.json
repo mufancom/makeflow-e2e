@@ -3,7 +3,7 @@
   "compilerOptions": {
     "composite": true,
 
-    "types": ["node", "expect-puppeteer"],
+    "types": ["node"],
 
     "outDir": "../../.bld-cache/makeflow-web/test"
   }

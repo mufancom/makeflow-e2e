@@ -107,7 +107,7 @@ export class TurningEnvironment extends AbstractTurningEnvironment<
 }
 
 const browserOptions: BrowserOptions = {
-  // tslint:disable-next-line: no-null-keyword
+  // eslint-disable-next-line no-null/no-null
   defaultViewport: null,
 };
 
