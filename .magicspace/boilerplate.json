@@ -1,0 +1,14 @@
+{
+  "extends": "@mufan/code-boilerplates/typescript",
+  "options": {
+    "name": "makeflow-e2e",
+    "repository": "https://github.com/makeflow/makeflow-e2e.git",
+    "license": "MIT",
+    "author": "Chengdu Mufan Technology Co., Ltd.",
+    "tsProjects": [
+      {
+        "name": "makeflow-web/test"
+      }
+    ]
+  }
+}

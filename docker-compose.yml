@@ -4,8 +4,6 @@ services:
     image: mongo:latest
   redis:
     image: redis:latest
-  zookeeper:
-    image: zookeeper:latest
   proxy:
     image: proxy-v2ray:latest
   makeflow-web-server:
@@ -44,7 +42,8 @@ services:
     build:
       context: .
       args:
-        proxy: ${PROXY}
+        http_proxy: ${PROXY}
+        https_proxy: ${PROXY}
     depends_on:
       - makeflow-web-server
       - makeflow-web-consumer
