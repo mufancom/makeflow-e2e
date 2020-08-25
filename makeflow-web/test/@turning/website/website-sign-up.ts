@@ -72,7 +72,9 @@ turning
 
     await expect(page).toFill('input[name="mobile"]', mobile);
 
-    await page.click('.submit-button');
+    await expect(page).toMatchElement('.submit-button:not([disabled])');
+
+    await page.click('.submit-button:not([disabled])');
 
     data.account = {
       mobile,
@@ -120,7 +122,9 @@ turning
 
     await pageUISelect(page, 'input[name="industry"]', industry);
 
-    await page.click('.submit-button');
+    await expect(page).toMatchElement('.submit-button:not([disabled])');
+
+    await page.click('.submit-button:not([disabled])');
 
     data.organization = {
       name,

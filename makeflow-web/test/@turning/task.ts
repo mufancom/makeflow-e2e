@@ -26,16 +26,4 @@ turning
     match: 'modal:create-task',
   })
   .to(['task:create:procedure-selected'])
-  .by('doing nothing (default)', async () => {});
-
-turning
-  .turn([], {
-    pattern: false,
-    match: 'modal:create-task',
-  })
-  .to(['task:create:procedure-selected'])
-  .by('select the second procedure', async ({page}) => {
-    await expect(page).toClick(
-      '.create-task-modal .procedure-tag:nth-child(2)',
-    );
-  });
+  .by('doing nothing', async () => {});

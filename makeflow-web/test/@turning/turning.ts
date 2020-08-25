@@ -114,6 +114,7 @@ const browserOptions: BrowserOptions = {
 const options = REMOTE
   ? {
       connect: {
+        headless: false,
         browserURL: 'http://localhost:9222',
         ...browserOptions,
       },

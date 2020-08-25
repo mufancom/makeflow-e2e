@@ -1,4 +1,4 @@
-const {ENVIRONMENT, PORT = '8080'} = process.env;
+const {ENVIRONMENT, PORT = '8060'} = process.env;
 
 const HOST = ENVIRONMENT === 'e2e' ? 'makeflow-web-server' : 'localhost';
 

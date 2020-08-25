@@ -43,5 +43,5 @@ export async function pageUISelect(
 }
 
 export async function waitForSyncing(page: Page): Promise<void> {
-  await page.waitFor('.syncing-info:not(.syncing)');
+  await page.waitFor('.syncing-info', {hidden: true});
 }
