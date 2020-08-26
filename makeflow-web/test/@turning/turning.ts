@@ -107,14 +107,15 @@ export class TurningEnvironment extends AbstractTurningEnvironment<
 }
 
 const browserOptions: BrowserOptions = {
-  // eslint-disable-next-line no-null/no-null
-  defaultViewport: null,
+  defaultViewport: {
+    width: 1200,
+    height: 600,
+  },
 };
 
 const options = REMOTE
   ? {
       connect: {
-        headless: false,
         browserURL: 'http://localhost:9222',
         ...browserOptions,
       },
