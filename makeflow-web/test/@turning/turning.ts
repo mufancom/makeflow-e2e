@@ -113,7 +113,7 @@ export class TurningEnvironment extends AbstractTurningEnvironment<
   ): Promise<void> {
     let screenshotPath = Path.join(
       SCREENSHOTS_DIR,
-      `${id}-${attempts}-${passed ? 'passed' : 'failed'}.png`,
+      `${id}-${attempts + 1}-${passed ? 'passed' : 'failed'}.png`,
     );
 
     let screenshotBuffer = await page.screenshot({encoding: 'binary'});

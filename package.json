@@ -41,7 +41,7 @@
     "ts-node": "^8.10.2",
     "tslang": "^0.1.22",
     "tslib": "^2.0.1",
-    "turning": "0.1.0-wip.7",
+    "turning": "0.1.0-wip.8",
     "typescript": "^3.9.7",
     "villa": "^0.3.2"
   }
