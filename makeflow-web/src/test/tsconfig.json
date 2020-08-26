@@ -5,6 +5,6 @@
 
     "types": ["node", "expect-puppeteer"],
 
-    "outDir": "../../.bld-cache/makeflow-web/test"
+    "outDir": "../../.bld-cache/test"
   }
 }

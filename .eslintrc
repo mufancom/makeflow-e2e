@@ -15,7 +15,7 @@
       }
     },
     {
-      "files": ["makeflow-web/test/**/*.{ts,tsx}"],
+      "files": ["makeflow-web/src/test/**/*.{ts,tsx}"],
       "extends": ["plugin:@mufan/override-dev"]
     }
   ]
