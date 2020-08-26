@@ -1,0 +1,143 @@
+{
+  "containerConfigEnvs": {
+    "commercial": {
+      "public": [
+        "FCM_APPLICATION_PRIVATE_KEY",
+        "FCM_APPLICATION_PUBLIC_KEY",
+        "FIREBASE_SERVER_KEY",
+        "GITHUB_CLIENT",
+        "GITHUB_SECRET",
+        "KOA_APP_KEYS",
+        "MAIL_PASSWORD",
+        "MONGO_URI",
+        "OSS_KEY",
+        "OSS_SECRET",
+        "REDIS_HOST",
+        "REDIS_PASSWORD",
+        "REDIS_PORT",
+        "SMS_KEY",
+        "SMS_SECRET",
+        "WECHAT_CLIENT",
+        "WECHAT_MINI_PROGRAM_APPID",
+        "WECHAT_MINI_PROGRAM_SECRET",
+        "WECHAT_SECRET",
+        "ENABLE_X_PROFILER",
+        "XTRANSIT_APP_ID",
+        "XTRANSIT_APP_SECRET",
+        "XTRANSIT_SERVER_IP",
+        "XTRANSIT_SERVER_PORT"
+      ],
+      "internal": [
+        "FCM_APPLICATION_PRIVATE_KEY",
+        "FCM_APPLICATION_PUBLIC_KEY",
+        "FIREBASE_SERVER_KEY",
+        "INTERNAL_GITHUB_CLIENT",
+        "INTERNAL_GITHUB_SECRET",
+        "KOA_APP_KEYS",
+        "MAIL_PASSWORD",
+        "OSS_KEY",
+        "OSS_SECRET",
+        "SMS_KEY",
+        "SMS_SECRET",
+        "ENABLE_X_PROFILER",
+        "XTRANSIT_APP_ID",
+        "XTRANSIT_APP_SECRET",
+        "XTRANSIT_SERVER_IP",
+        "XTRANSIT_SERVER_PORT"
+      ],
+      "staging": [
+        "FCM_APPLICATION_PRIVATE_KEY",
+        "FCM_APPLICATION_PUBLIC_KEY",
+        "FIREBASE_SERVER_KEY",
+        "KOA_APP_KEYS",
+        "MAIL_PASSWORD",
+        "OSS_KEY",
+        "OSS_SECRET",
+        "SMS_KEY",
+        "SMS_SECRET",
+        "STAGING_GITHUB_CLIENT",
+        "STAGING_GITHUB_SECRET",
+        "ENABLE_X_PROFILER",
+        "XTRANSIT_APP_ID",
+        "XTRANSIT_APP_SECRET",
+        "XTRANSIT_SERVER_IP",
+        "XTRANSIT_SERVER_PORT"
+      ],
+      "e2e": [
+        "FCM_APPLICATION_PRIVATE_KEY",
+        "FCM_APPLICATION_PUBLIC_KEY",
+        "FIREBASE_SERVER_KEY",
+        "KOA_APP_KEYS",
+        "OSS_KEY",
+        "OSS_SECRET",
+        "ENABLE_X_PROFILER",
+        "XTRANSIT_APP_ID",
+        "XTRANSIT_APP_SECRET",
+        "XTRANSIT_SERVER_IP",
+        "XTRANSIT_SERVER_PORT"
+      ],
+      "mr": [
+        "FCM_APPLICATION_PRIVATE_KEY",
+        "FCM_APPLICATION_PUBLIC_KEY",
+        "FIREBASE_SERVER_KEY",
+        "KOA_APP_KEYS",
+        "MAIL_PASSWORD",
+        "MERGE_REQUEST_ID",
+        "OSS_KEY",
+        "OSS_SECRET",
+        "SMS_KEY",
+        "SMS_SECRET",
+        "ENABLE_X_PROFILER",
+        "XTRANSIT_APP_ID",
+        "XTRANSIT_APP_SECRET",
+        "XTRANSIT_SERVER_IP",
+        "XTRANSIT_SERVER_PORT"
+      ]
+    },
+    "dashboard": {
+      "public": [
+        "DASHBOARD_PASSWORD",
+        "KOA_APP_KEYS",
+        "MONGO_URI",
+        "REDIS_HOST",
+        "REDIS_PASSWORD",
+        "REDIS_PORT",
+        "ENABLE_X_PROFILER",
+        "XTRANSIT_APP_ID",
+        "XTRANSIT_APP_SECRET",
+        "XTRANSIT_SERVER_IP",
+        "XTRANSIT_SERVER_PORT"
+      ],
+      "internal": [
+        "DASHBOARD_PASSWORD",
+        "KOA_APP_KEYS",
+        "ENABLE_X_PROFILER",
+        "XTRANSIT_APP_ID",
+        "XTRANSIT_APP_SECRET",
+        "XTRANSIT_SERVER_IP",
+        "XTRANSIT_SERVER_PORT"
+      ],
+      "staging": [
+        "ENABLE_X_PROFILER",
+        "XTRANSIT_APP_ID",
+        "XTRANSIT_APP_SECRET",
+        "XTRANSIT_SERVER_IP",
+        "XTRANSIT_SERVER_PORT"
+      ],
+      "e2e": [
+        "ENABLE_X_PROFILER",
+        "XTRANSIT_APP_ID",
+        "XTRANSIT_APP_SECRET",
+        "XTRANSIT_SERVER_IP",
+        "XTRANSIT_SERVER_PORT"
+      ],
+      "mr": [
+        "ENABLE_X_PROFILER",
+        "XTRANSIT_APP_ID",
+        "XTRANSIT_APP_SECRET",
+        "XTRANSIT_SERVER_IP",
+        "XTRANSIT_SERVER_PORT"
+      ]
+    }
+  }
+}

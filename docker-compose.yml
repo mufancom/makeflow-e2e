@@ -1,43 +1,95 @@
 version: '3'
+
 services:
   mongo:
-    image: mongo:latest
+    image: mongo:4.2
+
   redis:
     image: redis:latest
+
+  ordered-lock:
+    image: makeflow/ordered-lock:v0.1.5
+
   proxy:
-    image: proxy-v2ray:latest
-  makeflow-web-server:
+    image: proxy-v2ray-e2e:latest
+
+  gateway:
+    image: makeflow-web-e2e:latest
+    environment:
+      - APPLICATION=gateway
+      - DEPLOYMENT=e2e
+      # @inplate
+      # {{#each containerConfigEnvs.commercial.e2e}}
+      # - {{this}}
+      # {{/each}}
+      # @plate
+      - FCM_APPLICATION_PRIVATE_KEY
+      - FCM_APPLICATION_PUBLIC_KEY
+      - FIREBASE_SERVER_KEY
+      - KOA_APP_KEYS
+      - OSS_KEY
+      - OSS_SECRET
+      - ENABLE_X_PROFILER
+      - XTRANSIT_APP_ID
+      - XTRANSIT_APP_SECRET
+      - XTRANSIT_SERVER_IP
+      - XTRANSIT_SERVER_PORT
+      # @end
+
+  app-server:
     image: makeflow-web-e2e:latest
     depends_on:
       - mongo
       - redis
-      - zookeeper
-      - proxy
+      - ordered-lock
     environment:
-      - APPLICATION=main
-      - ENVIRONMENT=e2e
-      - COOKIE_SECRET_KEYS
+      - APPLICATION=app-server
+      - DEPLOYMENT=e2e
+      # @inplate
+      # {{#each containerConfigEnvs.commercial.e2e}}
+      # - {{this}}
+      # {{/each}}
+      # @plate
+      - FCM_APPLICATION_PRIVATE_KEY
+      - FCM_APPLICATION_PUBLIC_KEY
+      - FIREBASE_SERVER_KEY
+      - KOA_APP_KEYS
       - OSS_KEY
       - OSS_SECRET
-      - FIREBASE_SERVER_KEY
-      - FCM_APPLICATION_PUBLIC_KEY
-      - FCM_APPLICATION_PRIVATE_KEY
-  makeflow-web-consumer:
+      - ENABLE_X_PROFILER
+      - XTRANSIT_APP_ID
+      - XTRANSIT_APP_SECRET
+      - XTRANSIT_SERVER_IP
+      - XTRANSIT_SERVER_PORT
+      # @end
+
+  app-server-consumer:
     image: makeflow-web-e2e:latest
     depends_on:
       - mongo
       - redis
-      - zookeeper
-      - proxy
+      - ordered-lock
     environment:
-      - APPLICATION=consumer
-      - ENVIRONMENT=e2e
-      - COOKIE_SECRET_KEYS
+      - APPLICATION=app-server-consumer
+      - DEPLOYMENT=e2e
+      # @inplate
+      # {{#each containerConfigEnvs.commercial.e2e}}
+      # - {{this}}
+      # {{/each}}
+      # @plate
+      - FCM_APPLICATION_PRIVATE_KEY
+      - FCM_APPLICATION_PUBLIC_KEY
+      - FIREBASE_SERVER_KEY
+      - KOA_APP_KEYS
       - OSS_KEY
       - OSS_SECRET
-      - FIREBASE_SERVER_KEY
-      - FCM_APPLICATION_PUBLIC_KEY
-      - FCM_APPLICATION_PRIVATE_KEY
+      - ENABLE_X_PROFILER
+      - XTRANSIT_APP_ID
+      - XTRANSIT_APP_SECRET
+      - XTRANSIT_SERVER_IP
+      - XTRANSIT_SERVER_PORT
+      # @end
+
   test:
     build:
       context: .
@@ -45,8 +97,9 @@ services:
         http_proxy: ${PROXY}
         https_proxy: ${PROXY}
     depends_on:
-      - makeflow-web-server
-      - makeflow-web-consumer
+      - gateway
+      - app-server
+      - app-server-consumer
     environment:
       - ENVIRONMENT=e2e
       - CI

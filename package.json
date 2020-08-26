@@ -5,10 +5,12 @@
   "license": "MIT",
   "author": "Chengdu Mufan Technology Co., Ltd.",
   "scripts": {
+    "update-metadata": "./scripts/update-metadata.sh",
+    "update": "./scripts/update.sh",
     "build": "rimraf bld .bld-cache && tsc --build",
     "lint": "eslint .",
     "lint-prettier": "prettier --check .",
-    "test": "yarn lint-prettier && yarn build && yarn lint",
+    "test": "yarn lint-prettier && yarn build && yarn lint && yarn inplate --assert",
     "test:makeflow-web": "ts-node-script --files makeflow-web/test/test.ts"
   },
   "devDependencies": {
@@ -26,6 +28,7 @@
     "expect-puppeteer": "^4.4.0",
     "faker": "^4.1.0",
     "get-port": "^5.1.1",
+    "inplate": "^0.1.11",
     "lodash": "^4.17.20",
     "main-function": "^0.1.2",
     "merge": "^1.2.1",
