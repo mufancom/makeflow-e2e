@@ -401,7 +401,7 @@ callsites@^3.0.0:
   resolved "https://registry.npm.taobao.org/callsites/download/callsites-3.1.0.tgz#b3630abd8943432f54b3f0519238e33cd7df2f73"
   integrity sha1-s2MKvYlDQy9Us/BRkjjjPNffL3M=
 
-chalk@^2.0.0, chalk@^2.4.2:
+chalk@^2.0.0:
   version "2.4.2"
   resolved "https://registry.npm.taobao.org/chalk/download/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
   integrity sha1-zUJUFnelQzPPVBpJEIwUMrRMlCQ=
@@ -1256,7 +1256,7 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
-lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20:
+lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20:
   version "4.17.20"
   resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.20.tgz?cache=0&sync_timestamp=1597335994883&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flodash%2Fdownload%2Flodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
   integrity sha1-tEqbYpe8tpjxxRo1RaKzs2jVnFI=
@@ -1539,7 +1539,7 @@ pkg-dir@^4.2.0:
   dependencies:
     find-up "^4.0.0"
 
-prando@^5.1.0:
+prando@^5.1.2:
   version "5.1.2"
   resolved "https://registry.npm.taobao.org/prando/download/prando-5.1.2.tgz#1c7f9b8f543bf335d44a2aadcaa1b3163f3b8fb8"
   integrity sha1-HH+bj1Q78zXUSiqtyqGzFj87j7g=
@@ -1908,7 +1908,7 @@ tsconfig-paths@^3.9.0:
     minimist "^1.2.0"
     strip-bom "^3.0.0"
 
-tslang@^0.1.13, tslang@^0.1.22:
+tslang@^0.1.21, tslang@^0.1.22:
   version "0.1.22"
   resolved "https://registry.npm.taobao.org/tslang/download/tslang-0.1.22.tgz#df8260690037043e6a8a7ad8e55d9bf0e0767565"
   integrity sha1-34JgaQA3BD5qinrY5V2b8OB2dWU=
@@ -1930,17 +1930,17 @@ tsutils@^3.17.1:
   dependencies:
     tslib "^1.8.1"
 
-turning@0.1.0-wip.5:
-  version "0.1.0-wip.5"
-  resolved "https://registry.npm.taobao.org/turning/download/turning-0.1.0-wip.5.tgz#cb3cf48f75bcc742fb369741f6847eb6ad6c87fd"
-  integrity sha1-yzz0j3W8x0L7NpdB9oR+tq1sh/0=
+turning@0.1.0-wip.6:
+  version "0.1.0-wip.6"
+  resolved "https://registry.npm.taobao.org/turning/download/turning-0.1.0-wip.6.tgz#e47ea1c0066c7bb29feb9a80584c1cf7fb7a9560"
+  integrity sha1-5H6hwAZse7Kf65qAWEwc9/t6lWA=
   dependencies:
-    chalk "^2.4.2"
-    lodash "^4.17.11"
+    chalk "^3.0.0"
+    lodash "^4.17.15"
     micromatch "^4.0.2"
     node-dijkstra "^2.5.0"
-    prando "^5.1.0"
-    tslang "^0.1.13"
+    prando "^5.1.2"
+    tslang "^0.1.21"
     villa "^0.3.1"
 
 type-check@^0.4.0, type-check@~0.4.0:
