@@ -1,1 +1,8 @@
-{"references": [{"path": "makeflow-web/src/test"}], "files": []}
+{
+  "references": [
+    {
+      "path": "makeflow-web/src/test"
+    }
+  ],
+  "files": []
+}
