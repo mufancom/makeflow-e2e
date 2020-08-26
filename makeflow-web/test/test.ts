@@ -18,7 +18,7 @@ setDefaultOptions({
 main(async () => {
   let passed = await turning.test({
     bail: true,
-    maxAttempts: 1,
+    maxAttempts: 3,
   });
 
   return passed ? 0 : 1;
