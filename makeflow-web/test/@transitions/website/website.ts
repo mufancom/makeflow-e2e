@@ -1,54 +1,77 @@
+import {WEBSITE_URL} from '../../@constants';
+import {TurningContext, turning} from '../../@turning';
+import {USER_CONTEXT_A} from '../../@users';
 import {
+  createTurningContextData,
   generateRandomMobile,
   getVerificationCode,
   pageUISelect,
 } from '../../@utils';
-import {turning} from '../turning';
-
-turning.define('website:sign-up:create-account').test(async ({page}) => {
-  await page.waitFor('.create-account-view');
-
-  await expect(page).toMatchElement('input[name="mobile"]');
-
-  await expect(page).not.toMatchElement('input[name="code"]');
-  await expect(page).not.toMatchElement('input[name="password"]');
-
-  await expect(page).toMatchElement('.submit-button', {
-    text: '下一步',
-    timeout: 1000,
-  });
-});
 
 turning
-  .define('website:sign-up:create-account:password-form')
-  .test(async ({page}) => {
-    await page.waitFor('.create-account-view');
+  .initialize(['website:home'])
+  .alias('goto home page')
+  .by('goto', async environment => {
+    let page = await environment.newPage();
 
-    await expect(page).toMatchElement('input[name="code"]');
-    await expect(page).toMatchElement('input[name="password"]');
+    await page.goto(WEBSITE_URL);
 
-    await expect(page).toMatchElement('.submit-button', {text: '注册'});
+    return new TurningContext(page, createTurningContextData());
   });
 
-turning.define('website:sign-up:create-organization').test(async ({page}) => {
-  await page.waitFor('.create-organization-view');
+turning
+  .initialize(['website:home'])
+  .alias('goto home page (user A not registered)')
+  .manual()
+  .by('goto', async environment => {
+    let page = await environment.newPage();
 
-  await expect(page).toMatchElement('input[name="name"]');
-  await expect(page).toMatchElement('input[name="size"]');
-  await expect(page).toMatchElement('input[name="industry"]');
+    await page.goto(WEBSITE_URL);
 
-  await expect(page).toMatchElement('.submit-button', {text: '下一步'});
-});
+    return new TurningContext(page, USER_CONTEXT_A);
+  });
 
-turning.define('website:sign-up:complete-user-profile').test(async ({page}) => {
-  await page.waitFor('.complete-user-profile-view');
+turning
+  .initialize([
+    'website:home',
+    'session:registered',
+    'session:organization-created',
+  ])
+  .alias('goto home page (user A registered)')
+  .by('goto', async environment => {
+    let page = await environment.newPage();
 
-  await expect(page).toMatchElement('input[name="avatar"][type="file"]');
-  await expect(page).toMatchElement('input[name="full-name"]');
-  await expect(page).toMatchElement('input[name="username"]');
+    await page.goto(WEBSITE_URL);
 
-  await expect(page).toMatchElement('.submit-button', {text: '完成'});
-});
+    return new TurningContext(page, USER_CONTEXT_A);
+  });
+
+turning
+  .turn(['website:home'], {
+    match: {not: 'session:logged-in'},
+  })
+  .to(['website:login'])
+  .alias('click login button on home page')
+  .by('clicking login button', async ({page}) => {
+    await page.click('.login-button');
+  });
+
+turning
+  .turn(['website:login'], {
+    match: 'session:registered',
+  })
+  .to(['app', 'session:logged-in', 'session:organization-selected'])
+  .alias('submit login form')
+  .by('submitting login form', async ({page, data}) => {
+    let {mobile, password} = data.account!;
+
+    await expect(page).toFill('input[name="mobile"]', mobile);
+    await expect(page).toFill('input[name="password"]', password);
+
+    await page.click('.submit-button');
+
+    await page.waitForNavigation();
+  });
 
 turning
   .turn(['website:home'], {

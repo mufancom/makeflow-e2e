@@ -1,6 +1,4 @@
-import {turning} from './turning';
-
-turning.define('user:specified');
+import {turning} from '../@turning';
 
 turning
   .turn([], {

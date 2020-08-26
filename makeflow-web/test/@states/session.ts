@@ -1,4 +1,4 @@
-import {turning} from './turning';
+import {turning} from '../@turning';
 
 turning.define('session:registered');
 turning.define('session:logged-in');

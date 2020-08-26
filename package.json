@@ -36,7 +36,6 @@
     "prettier": "^2.0.5",
     "puppeteer-core": "^5.2.1",
     "rimraf": "^3.0.2",
-    "ts-node": "^8.10.2",
     "tslang": "^0.1.22",
     "tslib": "^2.0.1",
     "turning": "0.1.0-wip.8",

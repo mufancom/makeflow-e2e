@@ -1,23 +1,24 @@
 import {lorem} from 'faker';
 import _ from 'lodash';
 
+import {turning} from '../../@turning';
 import {waitForSyncing} from '../../@utils';
-import {turning} from '../turning';
 
-turning.define('app:sidebar:idea').test(
-  async ({
-    page,
-    data: {
-      idea: {active: activeIdeaTexts},
-    },
-  }) => {
-    await page.waitFor('.expanded-sidebar .idea');
+turning
+  .turn(['app:sidebar:*'], {
+    match: {not: 'app:sidebar:achievements'},
+  })
+  .to(['app:sidebar:achievements'])
+  .by('clicking sidebar user avatar', async ({page}) => {
+    await page.click('.normal-sidebar-nav-link.achievements-link');
+  });
 
-    for (let text of activeIdeaTexts) {
-      await expect(page).toMatchElement('.idea-list-item', {text});
-    }
-  },
-);
+turning
+  .turn(['app:sidebar:achievements'])
+  .to(['app:sidebar:default'])
+  .by('clicking sidebar user avatar', async ({page}) => {
+    await page.click('.normal-sidebar-nav-link.achievements-link');
+  });
 
 turning
   .turn(['app:sidebar:*'], {

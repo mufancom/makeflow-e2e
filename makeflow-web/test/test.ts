@@ -1,6 +1,9 @@
 import expect from 'expect';
 import {main} from 'main-function';
 
+import './@states';
+import './@transitions';
+
 import {turning} from './@turning';
 
 /* eslint-disable @mufan/import-groups */

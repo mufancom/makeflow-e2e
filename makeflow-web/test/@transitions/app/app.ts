@@ -1,8 +1,4 @@
-import {turning} from '../turning';
-
-turning.define('app').test(async ({page}) => {
-  await page.waitFor('#app > .sidebar');
-});
+import {turning} from '../../@turning';
 
 turning
   .turn(['app', 'app:*', 'session:logged-in', 'session:organization-selected'])

@@ -2,8 +2,8 @@ import fetch from 'node-fetch';
 import {Page} from 'puppeteer-core';
 import * as v from 'villa';
 
+import {API_E2E_GET_VERIFICATION_CODE_URL} from './@constants';
 import {TurningContextData} from './@turning';
-import {API_E2E_GET_VERIFICATION_CODE_URL} from './@urls';
 
 export async function getVerificationCode(): Promise<string> {
   await v.sleep(1000);
