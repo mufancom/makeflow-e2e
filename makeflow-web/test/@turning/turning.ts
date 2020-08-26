@@ -1,4 +1,7 @@
+import * as Path from 'path';
+
 import * as ChromePaths from 'chrome-paths';
+import * as FSExtra from 'fs-extra';
 import _ from 'lodash';
 import {
   Browser,
@@ -14,7 +17,10 @@ import {
   AbstractTurningContext,
   AbstractTurningEnvironment,
   Turning,
+  TurningEnvironmentAfterEachData,
 } from 'turning';
+
+const SCREENSHOTS_DIR = '/tmp/screenshots';
 
 const {CI, REMOTE_USER_NAME} = process.env;
 
@@ -99,6 +105,20 @@ export class TurningEnvironment extends AbstractTurningEnvironment<
 
   async after(): Promise<void> {
     await this.browserContext.close();
+  }
+
+  async afterEach(
+    {page}: TurningContext,
+    {id, attempts, passed}: TurningEnvironmentAfterEachData,
+  ): Promise<void> {
+    let screenshotPath = Path.join(
+      SCREENSHOTS_DIR,
+      `${id}-${attempts}-${passed ? 'passed' : 'failed'}.png`,
+    );
+
+    let screenshotBuffer = await page.screenshot({encoding: 'binary'});
+
+    await FSExtra.outputFile(screenshotPath, screenshotBuffer);
   }
 
   async newPage(): Promise<Page> {

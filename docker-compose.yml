@@ -104,3 +104,5 @@ services:
       - ENVIRONMENT=e2e
       - CI
     command: yarn test:${TEST_PROJECT}
+    volumes:
+      - ./screenshots:/tmp/screenshots

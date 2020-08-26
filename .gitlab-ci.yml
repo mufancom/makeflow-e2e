@@ -4,6 +4,8 @@ stages:
 test:
   stage: test
   script:
+    - pwd
+    - mkdir -p screenshots
     - docker-compose up --build --force-recreate --remove-orphans --renew-anon-volumes --exit-code-from test
   only:
     variables:
