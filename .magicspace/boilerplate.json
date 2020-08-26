@@ -8,7 +8,9 @@
     "tsProjects": [
       {
         "name": "test",
-        "dir": "makeflow-web"
+        "type": "script",
+        "dir": "makeflow-web",
+        "src": false
       }
     ]
   }
