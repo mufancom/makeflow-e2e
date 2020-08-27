@@ -40,7 +40,7 @@ for (let state of states) {
 states = Array.from(stateSet).sort();
 
 FS.writeFileSync(
-  Path.join(__dirname, '../test/@types/turning.d.ts'),
+  Path.join(__dirname, '@types/turning.d.ts'),
   `\
 // Automatically generated turning types
 
