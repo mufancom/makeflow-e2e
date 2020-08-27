@@ -1,3 +1,5 @@
 # TypeScript Build Artifacts
 bld/
 .bld-cache/
+# Generated Types
+makeflow-web/test/@types/turning.d.ts

@@ -5,6 +5,7 @@
   "license": "MIT",
   "author": "Chengdu Mufan Technology Co., Ltd.",
   "scripts": {
+    "update-types:makeflow-web": "ts-node-script --transpile-only makeflow-web/test/update-types.ts",
     "update-metadata": "./scripts/update-metadata.sh",
     "update": "./scripts/update.sh",
     "build": "rimraf bld .bld-cache && tsc --build",
@@ -36,6 +37,7 @@
     "prettier": "^2.1.1",
     "puppeteer-core": "^5.2.1",
     "rimraf": "^3.0.2",
+    "ts-node": "^9.0.0",
     "tslang": "^0.1.22",
     "tslib": "^2.0.1",
     "turning": "0.1.0-wip.8",

@@ -152,9 +152,13 @@ const options = REMOTE
 
 const environment = new TurningEnvironment(options);
 
-export const turning = new Turning<TurningContext, TurningEnvironment>(
-  environment,
-);
+export const turning = new Turning<
+  TurningContext,
+  TurningEnvironment,
+  TurningPattern,
+  TurningState,
+  TurningAlias
+>(environment);
 
 turning.pattern({not: 'modal:*'});
 
