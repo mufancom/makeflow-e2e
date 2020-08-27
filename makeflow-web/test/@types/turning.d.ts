@@ -1,7 +1,7 @@
 // Automatically generated turning types
 
 type TurningPattern =
-  | 'never';
+  | never;
 
 type TurningState =
   | 'app'

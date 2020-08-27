@@ -15,7 +15,7 @@ let {
   transitionNodes,
 } = turning as any;
 
-let patterns: string[] = _.compact(
+let patterns: (string | undefined)[] = _.compact(
   Array.from(transitionMatchOptionsMap.keys()),
 );
 let states: string[] = Array.from(defineNodeMap.keys());
@@ -24,7 +24,7 @@ let aliases: string[] = _.compact(
 );
 
 if (!patterns.length) {
-  patterns.push('never');
+  patterns.push(undefined);
 }
 
 let stateSet = new Set(states);
@@ -45,7 +45,9 @@ FS.writeFileSync(
 // Automatically generated turning types
 
 type TurningPattern =
-${patterns.map(pattern => `  | '${pattern}'`).join('\n')};
+${patterns
+  .map(pattern => `  | ${pattern ? `'${pattern}'` : 'never'}`)
+  .join('\n')};
 
 type TurningState =
 ${states.map(state => `  | '${state}'`).join('\n')};
