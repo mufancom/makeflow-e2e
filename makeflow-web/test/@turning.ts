@@ -126,7 +126,7 @@ export class TurningEnvironment extends AbstractTurningEnvironment<
 const browserOptions: BrowserOptions = {
   defaultViewport: {
     width: 1200,
-    height: 600,
+    height: 800,
   },
 };
 

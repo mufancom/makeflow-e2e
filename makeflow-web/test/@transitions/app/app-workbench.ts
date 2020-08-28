@@ -2,6 +2,8 @@ import _ from 'lodash';
 
 import {turning} from '../../@turning';
 
+declare const _entrances: any;
+
 turning.define('app:workbench').test(async ({page}) => {
   await page.waitFor('.workbench-view');
 });
@@ -12,9 +14,9 @@ turning
   })
   .to(['app:workbench', 'app:sidebar:default'])
   .by('pushing "/app"', async ({page}) => {
-    await page.evaluate(`
-      _history.push('/app');
-    `);
+    await page.evaluate(async () => {
+      await _entrances.history.push('/app');
+    });
   });
 
 turning
