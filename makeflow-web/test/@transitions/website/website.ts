@@ -9,7 +9,7 @@ import {
 } from '../../@utils';
 
 turning
-  .initialize(['website:home'])
+  .initialize(['/website/home'])
   .alias('goto home page')
   .by('goto', async environment => {
     let page = await environment.newPage();
@@ -20,7 +20,7 @@ turning
   });
 
 turning
-  .initialize(['website:home'])
+  .initialize(['/website/home'])
   .alias('goto home page (user A not registered)')
   .manual()
   .by('goto', async environment => {
@@ -33,7 +33,7 @@ turning
 
 turning
   .initialize([
-    'website:home',
+    '/website/home',
     'session:registered',
     'session:organization-created',
   ])
@@ -47,20 +47,20 @@ turning
   });
 
 turning
-  .turn(['website:home'], {
+  .turn(['/website/home'], {
     match: {not: 'session:logged-in'},
   })
-  .to(['website:login'])
+  .to(['/website/login'])
   .alias('click login button on home page')
   .by('clicking login button', async ({page}) => {
     await page.click('.login-button');
   });
 
 turning
-  .turn(['website:login'], {
+  .turn(['/website/login'], {
     match: 'session:registered',
   })
-  .to(['app', 'session:logged-in', 'session:organization-selected'])
+  .to(['/app', 'session:logged-in', 'session:organization-selected'])
   .alias('submit login form')
   .by('submitting login form', async ({page, data}) => {
     let {mobile, password} = data.account!;
@@ -74,18 +74,18 @@ turning
   });
 
 turning
-  .turn(['website:home'], {
+  .turn(['/website/home'], {
     match: {not: 'session:registered'},
   })
-  .to(['website:sign-up:create-account'])
+  .to(['/website/sign-up/create-account'])
   .alias('click sign-up button on home page')
   .by('clicking sign-up button', async ({page}) => {
     await page.click('.sign-up-button');
   });
 
 turning
-  .turn(['website:sign-up:create-account'])
-  .to(['website:sign-up:create-account:password-form'])
+  .turn(['/website/sign-up/create-account'])
+  .to(['/website/sign-up/create-account/password-form'])
   .alias('fill mobile to create account')
   .by('filling mobile and clicking next step button', async ({page, data}) => {
     let {mobile, password} = data.account || {
@@ -106,9 +106,9 @@ turning
   });
 
 turning
-  .turn(['website:sign-up:create-account:password-form'])
+  .turn(['/website/sign-up/create-account/password-form'])
   .to([
-    'website:sign-up:create-organization',
+    '/website/sign-up/create-organization',
     'session:registered',
     'session:logged-in',
   ])
@@ -125,9 +125,9 @@ turning
   });
 
 turning
-  .turn(['website:sign-up:create-organization'])
+  .turn(['/website/sign-up/create-organization'])
   .to([
-    'website:sign-up:complete-user-profile',
+    '/website/sign-up/complete-user-profile',
     'session:organization-created',
     'session:organization-selected',
   ])
@@ -157,8 +157,8 @@ turning
   });
 
 turning
-  .turn(['website:sign-up:complete-user-profile'])
-  .to(['app'])
+  .turn(['/website/sign-up/complete-user-profile'])
+  .to(['/app'])
   .alias('complete user profile')
   .by('filling form and clicking complete button', async ({page, data}) => {
     let {fullName, username} = data.user || {

@@ -19,11 +19,13 @@
     "typescriptreact"
   ],
   "cSpell.words": [
+    "cond",
     "infobars",
     "inplate",
     "makeflow",
     "mufan",
     "pageerror",
+    "syncable",
     "tslang",
     "tslib"
   ]

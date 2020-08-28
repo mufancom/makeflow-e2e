@@ -1,14 +1,14 @@
 import {turning} from '../../@turning';
 
-turning.define('app:sidebar:default').test(async ({page}) => {
+turning.define('/app/sidebar/default').test(async ({page}) => {
   await page.waitFor('.sidebar');
 });
 
-turning.define('app:sidebar:achievements').test(async ({page}) => {
+turning.define('/app/sidebar/achievements').test(async ({page}) => {
   await page.waitFor('.expanded-sidebar .achievements');
 });
 
-turning.define('app:sidebar:idea').test(
+turning.define('/app/sidebar/idea').test(
   async ({
     page,
     data: {

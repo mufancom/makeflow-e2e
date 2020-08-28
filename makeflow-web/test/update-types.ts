@@ -19,40 +19,61 @@ let patterns: (string | undefined)[] = _.compact(
   Array.from(transitionMatchOptionsMap.keys()),
 );
 let states: string[] = Array.from(defineNodeMap.keys());
-let aliases: string[] = _.compact(
-  [...initializeNodes, ...transitionNodes].map(node => node._alias),
+let initializeAliases: string[] = _.compact(
+  initializeNodes.map((node: any) => node._alias),
+);
+let transitionAliases: string[] = _.compact(
+  transitionNodes.map((node: any) => node._alias),
 );
 
 if (!patterns.length) {
   patterns.push(undefined);
 }
 
-let stateSet = new Set(states);
+states.sort();
+
+let statePatternSet = new Set(states);
 
 for (let state of states) {
-  let segments = state.split(':');
+  let regex = /[:/]/g;
+  let groups: RegExpExecArray | null;
 
-  for (let i = 1; i < segments.length; i++) {
-    stateSet.add([...segments.slice(0, i), '*'].join(':'));
+  // eslint-disable-next-line no-cond-assign
+  while ((groups = regex.exec(state))) {
+    let prefix = state.slice(0, groups.index + 1);
+
+    if (state.slice(groups.index + 1).includes('/')) {
+      statePatternSet.add(`${prefix}**`);
+    } else {
+      statePatternSet.add(`${prefix}*`);
+    }
   }
 }
 
-states = Array.from(stateSet).sort();
+let statePatterns = Array.from(statePatternSet).sort();
 
 FS.writeFileSync(
   Path.join(__dirname, '@types/turning.d.ts'),
   `\
 // Automatically generated turning types
 
-type TurningPattern =
+interface TurningGenericParams {
+  pattern:
 ${patterns
-  .map(pattern => `  | ${pattern ? `'${pattern}'` : 'never'}`)
+  .map(pattern => `    | ${pattern ? `'${pattern}'` : 'never'}`)
   .join('\n')};
-
-type TurningState =
-${states.map(state => `  | '${state}'`).join('\n')};
-
-type TurningAlias =
-${aliases.map(alias => `  | '${alias}'`).join('\n')};
+  state:
+${states.map(state => `    | '${state}'`).join('\n')};
+  statePattern:
+${statePatterns.map(statePattern => `    | '${statePattern}'`).join('\n')};
+  initializeAlias:
+${initializeAliases
+  .map(initializeAlias => `    | '${initializeAlias}'`)
+  .join('\n')};
+  transitionAlias:
+${transitionAliases
+  .map(transitionAlias => `    | '${transitionAlias}'`)
+  .join('\n')};
+}
 `,
 );

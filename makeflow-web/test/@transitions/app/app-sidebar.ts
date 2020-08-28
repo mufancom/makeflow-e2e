@@ -5,40 +5,40 @@ import {turning} from '../../@turning';
 import {waitForSyncing} from '../../@utils';
 
 turning
-  .turn(['app:sidebar:*'], {
-    match: {not: 'app:sidebar:achievements'},
+  .turn(['/app/sidebar/*'], {
+    match: {not: '/app/sidebar/achievements'},
   })
-  .to(['app:sidebar:achievements'])
+  .to(['/app/sidebar/achievements'])
   .by('clicking sidebar user avatar', async ({page}) => {
     await page.click('.normal-sidebar-nav-link.achievements-link');
   });
 
 turning
-  .turn(['app:sidebar:achievements'])
-  .to(['app:sidebar:default'])
+  .turn(['/app/sidebar/achievements'])
+  .to(['/app/sidebar/default'])
   .by('clicking sidebar user avatar', async ({page}) => {
     await page.click('.normal-sidebar-nav-link.achievements-link');
   });
 
 turning
-  .turn(['app:sidebar:*'], {
-    match: {not: 'app:sidebar:idea'},
+  .turn(['/app/sidebar/*'], {
+    match: {not: '/app/sidebar/idea'},
   })
-  .to(['app:sidebar:idea'])
+  .to(['/app/sidebar/idea'])
   .by('clicking sidebar idea link', async ({page}) => {
     await page.click('.normal-sidebar-nav-link.idea-link');
   });
 
 turning
-  .turn(['app:sidebar:idea'])
-  .to(['app:sidebar:default'])
+  .turn(['/app/sidebar/idea'])
+  .to(['/app/sidebar/default'])
   .by('clicking sidebar idea link', async ({page}) => {
     await page.click('.normal-sidebar-nav-link.idea-link');
   });
 
 turning
   .turn([], {
-    match: 'app:sidebar:idea',
+    match: '/app/sidebar/idea',
   })
   .to([])
   .by('creating a new idea', async context => {

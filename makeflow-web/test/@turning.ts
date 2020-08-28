@@ -155,9 +155,7 @@ const environment = new TurningEnvironment(options);
 export const turning = new Turning<
   TurningContext,
   TurningEnvironment,
-  TurningPattern,
-  TurningState,
-  TurningAlias
+  TurningGenericParams
 >(environment);
 
 turning.pattern({not: 'modal:*'});
