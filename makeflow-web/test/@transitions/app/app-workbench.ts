@@ -1,29 +1,24 @@
 import _ from 'lodash';
 
-import {turning} from '../../@turning';
-
-declare const _entrances: any;
-
-turning.define('/app/workbench').test(async ({page}) => {
-  await page.waitFor('.workbench-view');
-});
+import {APP_WORKBENCH_URL} from '../../@constants';
+import {TurningContext, turning} from '../../@turning';
 
 turning
-  .spawn([], {
-    match: ['/app', {not: '/app/**'}],
-  })
-  .to(['/app/workbench', '/app/sidebar/default'])
-  .by('pushing "/app"', async ({page}) => {
-    await page.evaluate(async () => {
-      await _entrances.history.push('/app');
-    });
+  .spawn(['/app'])
+  .to(['/app/primary/workbench', '/app/sidebar'])
+  .by('goto "/app/workbench"', async (context, environment) => {
+    let page = await environment.newPage();
+
+    await page.goto(APP_WORKBENCH_URL);
+
+    return new TurningContext(page, _.cloneDeep(context.data));
   });
 
 turning
-  .turn([], {
-    match: ['/app', {not: '/app/**'}],
+  .turn(['/app'], {
+    match: {not: '/app/**'},
   })
-  .to(['/app/workbench', '/app/sidebar/default'])
+  .to(['/app/primary/workbench', '/app/sidebar'])
   .alias('transit to workbench')
   .manual()
   .by('doing nothing', () => {});

@@ -1,12 +1,7 @@
 import {turning} from '../../@turning';
 
 turning
-  .turn([
-    '/app',
-    '/app/**',
-    'session:logged-in',
-    'session:organization-selected',
-  ])
+  .turn(['/app/**', 'session:logged-in', 'session:organization-selected'])
   .to(['/website/login'])
   .alias('click app logout link')
   .manual()

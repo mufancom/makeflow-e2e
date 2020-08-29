@@ -2,7 +2,7 @@ import {turning} from '../../@turning';
 
 turning
   .turn([], {
-    match: ['/app/workbench', {not: 'modal:create-task'}],
+    match: ['/app/primary/workbench', {not: 'modal:create-task'}],
   })
   .to(['modal:create-task'])
   .by('clicking "+" on workbench', async ({page}) => {

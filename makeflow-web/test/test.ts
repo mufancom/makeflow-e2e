@@ -14,15 +14,26 @@ import {setDefaultOptions} from 'expect-puppeteer';
 
 /* eslint-enable @mufan/import-groups */
 
+const {CI} = process.env;
+
 setDefaultOptions({
   timeout: 1000,
 });
 
 main(async () => {
-  let passed = await turning.test({
-    bail: true,
-    maxAttempts: 3,
-  });
+  let passed = await turning.test(
+    CI
+      ? {
+          bail: true,
+          maxAttempts: 3,
+          verbose: true,
+        }
+      : {
+          bail: true,
+          allowUnreachable: true,
+          verbose: true,
+        },
+  );
 
   return passed ? 0 : 1;
 });

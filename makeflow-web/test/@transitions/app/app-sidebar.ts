@@ -5,7 +5,7 @@ import {turning} from '../../@turning';
 import {waitForSyncing} from '../../@utils';
 
 turning
-  .turn(['/app/sidebar/*'], {
+  .turn(['/app/sidebar{,/*}'], {
     match: {not: '/app/sidebar/achievements'},
   })
   .to(['/app/sidebar/achievements'])
@@ -15,13 +15,13 @@ turning
 
 turning
   .turn(['/app/sidebar/achievements'])
-  .to(['/app/sidebar/default'])
+  .to(['/app/sidebar'])
   .by('clicking sidebar user avatar', async ({page}) => {
     await page.click('.normal-sidebar-nav-link.achievements-link');
   });
 
 turning
-  .turn(['/app/sidebar/*'], {
+  .turn(['/app/sidebar{,/*}'], {
     match: {not: '/app/sidebar/idea'},
   })
   .to(['/app/sidebar/idea'])
@@ -31,7 +31,7 @@ turning
 
 turning
   .turn(['/app/sidebar/idea'])
-  .to(['/app/sidebar/default'])
+  .to(['/app/sidebar'])
   .by('clicking sidebar idea link', async ({page}) => {
     await page.click('.normal-sidebar-nav-link.idea-link');
   });

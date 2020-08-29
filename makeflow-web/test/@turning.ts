@@ -15,9 +15,12 @@ import {
 import {
   AbstractTurningContext,
   AbstractTurningEnvironment,
+  StateMatchingPattern,
   Turning,
   TurningEnvironmentAfterEachData,
 } from 'turning';
+
+const STATE_MATCHING_PATTERN_TYPES = ['modal', 'navigation-block'] as const;
 
 const SCREENSHOTS_DIR = '/tmp/screenshots';
 
@@ -103,7 +106,7 @@ export class TurningEnvironment extends AbstractTurningEnvironment<
   }
 
   async after(): Promise<void> {
-    await this.browserContext.close();
+    // await this.browserContext.close();
   }
 
   async afterEach(
@@ -116,6 +119,8 @@ export class TurningEnvironment extends AbstractTurningEnvironment<
         `${id}-${attempts + 1}-${passed ? 'passed' : 'failed'}.png`,
       ),
     });
+
+    await page.close();
   }
 
   async newPage(): Promise<Page> {
@@ -125,7 +130,7 @@ export class TurningEnvironment extends AbstractTurningEnvironment<
 
 const browserOptions: BrowserOptions = {
   defaultViewport: {
-    width: 1200,
+    width: 1920,
     height: 800,
   },
 };
@@ -158,7 +163,7 @@ export const turning = new Turning<
   TurningGenericParams
 >(environment);
 
-turning.pattern({not: 'modal:*'});
+turning.pattern(getStateMatchingPatternsWithout([]));
 
 turning.case('register user A', [
   'goto home page (user A not registered)',
@@ -176,3 +181,15 @@ turning.case('logout user A from workbench', [
   'transit to workbench',
   'click app logout link',
 ]);
+
+export type StateMatchingPatternType = typeof STATE_MATCHING_PATTERN_TYPES[number];
+
+export function getStateMatchingPatternsWithout(
+  types: StateMatchingPatternType[],
+): StateMatchingPattern<TurningGenericParams['statePattern']>[] {
+  return _.difference(STATE_MATCHING_PATTERN_TYPES, types).map(type => {
+    return {
+      not: `${type}:*`,
+    } as StateMatchingPattern<TurningGenericParams['statePattern']>;
+  });
+}

@@ -1,7 +1,13 @@
-import {turning} from '../../@turning';
+import {turning} from '../../../@turning';
 
-turning.define('/app/sidebar/default').test(async ({page}) => {
-  await page.waitFor('.sidebar');
+turning.define('/app');
+
+turning.define('/app/primary/workbench').test(async ({page}) => {
+  await page.waitFor('.workbench-view');
+});
+
+turning.define('/app/sidebar').test(async ({page}) => {
+  await page.waitFor('#app > .sidebar');
 });
 
 turning.define('/app/sidebar/achievements').test(async ({page}) => {
