@@ -935,6 +935,11 @@ functional-red-black-tree@^1.0.1:
   resolved "https://registry.npm.taobao.org/functional-red-black-tree/download/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
 
+get-or-create@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.npm.taobao.org/get-or-create/download/get-or-create-0.1.1.tgz#259ddd7762ade402036fd321846554540eb79bce"
+  integrity sha1-JZ3dd2Kt5AIDb9MhhGVUVA63m84=
+
 get-port@^5.1.1:
   version "5.1.1"
   resolved "https://registry.npm.taobao.org/get-port/download/get-port-5.1.1.tgz#0469ed07563479de6efb986baf053dcd7d4e3193"
@@ -1961,10 +1966,10 @@ tsutils@^3.17.1:
   dependencies:
     tslib "^1.8.1"
 
-turning@0.1.0-wip.11:
-  version "0.1.0-wip.11"
-  resolved "https://registry.npm.taobao.org/turning/download/turning-0.1.0-wip.11.tgz#a16e1aec6da96f009d93de0014398d4315a6200d"
-  integrity sha1-oW4a7G2pbwCdk94AFDmNQxWmIA0=
+turning@0.1.0-wip.13:
+  version "0.1.0-wip.13"
+  resolved "https://registry.npm.taobao.org/turning/download/turning-0.1.0-wip.13.tgz#eb0c2611df9fe0c1b81c8c4b4c613b1e7dc5fe4e"
+  integrity sha1-6wwmEd+f4MG4HIxLTGE7Hn3F/k4=
   dependencies:
     chalk "^3.0.0"
     lodash "^4.17.15"

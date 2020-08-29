@@ -1,3 +1,5 @@
+import getOrCreate from 'get-or-create';
+
 import {getStateMatchingPatternsWithout, turning} from '../../../@turning';
 
 turning
@@ -26,10 +28,15 @@ turning
     },
   )
   .to(['/app/primary/teams/default/procedures', 'procedure:simple:created'])
-  .by('clicking save procedure button', async ({page}) => {
+  .by('clicking save procedure button', async ({page, data}) => {
+    let {displayName} = getOrCreate(data)
+      .property('procedure', {})
+      .property('simple', {displayName: `Simple Procedure ${Date.now()}`})
+      .exec();
+
     await page.click('.procedure-display-name-text');
 
-    await page.type('.procedure-display-name-input', 'Simple Procedure');
+    await page.type('.procedure-display-name-input', displayName);
 
     await page.click('.save-procedure-button');
   });

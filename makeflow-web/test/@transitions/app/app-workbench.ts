@@ -5,7 +5,7 @@ import {TurningContext, turning} from '../../@turning';
 
 turning
   .spawn(['/app'])
-  .to(['/app/primary/workbench', '/app/sidebar'])
+  .to(['/app/primary/workbench', '/app/sidebar', '/app/overlay'])
   .by('goto "/app/workbench"', async (context, environment) => {
     let page = await environment.newPage();
 
@@ -18,7 +18,7 @@ turning
   .turn(['/app'], {
     match: {not: '/app/**'},
   })
-  .to(['/app/primary/workbench', '/app/sidebar'])
+  .to(['/app/primary/workbench', '/app/sidebar', '/app/overlay'])
   .alias('transit to workbench')
   .manual()
   .by('doing nothing', () => {});

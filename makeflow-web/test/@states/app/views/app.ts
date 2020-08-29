@@ -28,3 +28,5 @@ turning.define('/app/sidebar/idea').test(
     }
   },
 );
+
+turning.define('/app/overlay');

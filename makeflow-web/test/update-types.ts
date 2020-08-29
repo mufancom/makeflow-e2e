@@ -42,12 +42,12 @@ for (let state of states) {
   while ((groups = regex.exec(state))) {
     let prefix = state.slice(0, groups.index + 1);
 
-    let glob = state.slice(prefix.length).includes('/') ? '**' : '*';
-
-    statePatternSet.add(`${prefix}${glob}`);
-
     if (prefix.endsWith('/')) {
-      statePatternSet.add(`${prefix.slice(0, -1)}{,/${glob}}`);
+      statePatternSet.add(`${prefix}*`);
+      statePatternSet.add(`${prefix}**`);
+      statePatternSet.add(`${prefix.slice(0, -1)}{,/**}`);
+    } else {
+      statePatternSet.add(`${prefix}**`);
     }
   }
 }

@@ -22,6 +22,8 @@ import {
 
 const STATE_MATCHING_PATTERN_TYPES = ['modal', 'navigation-block'] as const;
 
+const APP_ROUTE_TYPES = ['primary', 'sidebar', 'overlay'].sort();
+
 const SCREENSHOTS_DIR = '/tmp/screenshots';
 
 const {CI, REMOTE_USER_NAME} = process.env;
@@ -48,6 +50,11 @@ export interface TurningContextData {
   task?: {
     numericId: string;
     brief: string;
+  };
+  procedure?: {
+    simple?: {
+      displayName: string;
+    };
   };
 }
 
@@ -161,7 +168,28 @@ export const turning = new Turning<
   TurningContext,
   TurningEnvironment,
   TurningGenericParams
->(environment);
+>(environment, {
+  statesCombinationValidator(states) {
+    let appRouteStates = states.filter(state => /^\/app\//.test(state));
+
+    if (appRouteStates.length) {
+      let appRouteTypes = appRouteStates
+        .map(
+          // eslint-disable-next-line @mufan/no-unnecessary-type-assertion
+          state => state.match(/^\/app\/([^/]*)/)![1],
+        )
+        .sort();
+
+      if (!_.isEqual(APP_ROUTE_TYPES, appRouteTypes)) {
+        throw new Error(
+          `Unexpected app route types found in states combination:\n${states
+            .map(state => `  ${state}`)
+            .join('\n')}`,
+        );
+      }
+    }
+  },
+});
 
 turning.pattern(getStateMatchingPatternsWithout([]));
 

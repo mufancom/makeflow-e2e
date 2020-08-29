@@ -5,6 +5,8 @@ import * as v from 'villa';
 import {API_E2E_GET_VERIFICATION_CODE_URL} from './@constants';
 import {TurningContextData} from './@turning';
 
+declare const _entrances: any;
+
 export async function getVerificationCode(): Promise<string> {
   await v.sleep(1000);
 
@@ -44,4 +46,18 @@ export async function pageUISelect(
 
 export async function waitForSyncing(page: Page): Promise<void> {
   await page.waitFor('.syncing-info', {hidden: true});
+}
+
+export async function waitForRouting(page: Page): Promise<void> {
+  for (let i = 0; i < 10; i++) {
+    await v.sleep(100);
+
+    let routing = await page.evaluate(() => _entrances.router.$routing);
+
+    if (!routing) {
+      return;
+    }
+  }
+
+  throw new Error('Timeout waiting for routing');
 }
