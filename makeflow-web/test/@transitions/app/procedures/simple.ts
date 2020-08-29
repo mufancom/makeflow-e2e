@@ -24,7 +24,7 @@ turning
     ],
     {
       pattern: false,
-      matches: getStateMatchingPatternsWithout(['navigation-block']),
+      match: getStateMatchingPatternsWithout(['navigation-block']),
     },
   )
   .to(['/app/primary/teams/default/procedures', 'procedure:simple:created'])
