@@ -5,7 +5,9 @@ turning
     match: ['/app/primary/workbench', {not: 'modal:create-task'}],
   })
   .to(['modal:create-task'])
-  .by('clicking "+" on workbench', async ({page}) => {
+  .by('clicking "+" on workbench', async context => {
+    let page = await context.getPage();
+
     // Due to unknown reasons, `page.click()` and `expect(page).toClick()` are
     // not stable here. Might be result of re-rendering.
 

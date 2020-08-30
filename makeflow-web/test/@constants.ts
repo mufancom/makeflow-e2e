@@ -1,8 +1,8 @@
-const {ENVIRONMENT, PORT = '8060'} = process.env;
+const {ENVIRONMENT} = process.env;
 
 const HOST = ENVIRONMENT === 'e2e' ? 'gateway' : 'localhost';
 
-export const BASE_URL = `http://${HOST}:${PORT}`;
+export const BASE_URL = `http://${HOST}:8060`;
 
 /////////////
 // Website //

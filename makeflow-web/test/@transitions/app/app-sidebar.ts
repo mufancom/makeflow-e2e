@@ -9,14 +9,18 @@ turning
     match: {not: '/app/sidebar/achievements'},
   })
   .to(['/app/sidebar/achievements'])
-  .by('clicking sidebar user avatar', async ({page}) => {
+  .by('clicking sidebar user avatar', async context => {
+    let page = await context.getPage();
+
     await page.click('.normal-sidebar-nav-link.achievements-link');
   });
 
 turning
   .turn(['/app/sidebar/achievements'])
   .to(['/app/sidebar'])
-  .by('clicking sidebar user avatar', async ({page}) => {
+  .by('clicking sidebar user avatar', async context => {
+    let page = await context.getPage();
+
     await page.click('.normal-sidebar-nav-link.achievements-link');
   });
 
@@ -25,14 +29,18 @@ turning
     match: {not: '/app/sidebar/idea'},
   })
   .to(['/app/sidebar/idea'])
-  .by('clicking sidebar idea link', async ({page}) => {
+  .by('clicking sidebar idea link', async context => {
+    let page = await context.getPage();
+
     await page.click('.normal-sidebar-nav-link.idea-link');
   });
 
 turning
   .turn(['/app/sidebar/idea'])
   .to(['/app/sidebar'])
-  .by('clicking sidebar idea link', async ({page}) => {
+  .by('clicking sidebar idea link', async context => {
+    let page = await context.getPage();
+
     await page.click('.normal-sidebar-nav-link.idea-link');
   });
 
@@ -42,7 +50,8 @@ turning
   })
   .to([])
   .by('creating a new idea', async context => {
-    let {page, data} = context;
+    let page = await context.getPage();
+    let data = context.data;
 
     let text = lorem.sentence();
 

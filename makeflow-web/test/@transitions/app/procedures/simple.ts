@@ -11,11 +11,14 @@ turning
     'procedure:simple:creating',
     'navigation-block:procedure-changed',
   ])
-  .by('clicking create procedure button', async ({page}) => {
+  .by('clicking create procedure button', async context => {
+    let page = await context.getPage();
+
     await page.click('.create-procedure-button');
   });
 
 turning
+  .only()
   .turn(
     [
       '/app/primary/procedures/team-id/create',
@@ -28,8 +31,10 @@ turning
     },
   )
   .to(['/app/primary/teams/default/procedures', 'procedure:simple:created'])
-  .by('clicking save procedure button', async ({page, data}) => {
-    let {displayName} = getOrCreate(data)
+  .by('clicking save procedure button', async context => {
+    let page = await context.getPage();
+
+    let {displayName} = getOrCreate(context.data)
       .property('procedure', {})
       .property('simple', {displayName: `Simple Procedure ${Date.now()}`})
       .exec();

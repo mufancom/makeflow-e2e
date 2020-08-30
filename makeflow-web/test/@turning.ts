@@ -1,6 +1,7 @@
 import * as Path from 'path';
 
 import * as ChromePaths from 'chrome-paths';
+import * as FSExtra from 'fs-extra';
 import _ from 'lodash';
 import {
   Browser,
@@ -59,14 +60,50 @@ export interface TurningContextData {
 }
 
 export class TurningContext extends AbstractTurningContext {
-  constructor(readonly page: Page, readonly data: TurningContextData) {
-    super();
+  private pagePromises: (Promise<Page> | undefined)[] = [];
 
-    page.on('pageerror', error => this.emit('error', error));
+  constructor(
+    readonly environment: TurningEnvironment,
+    readonly data: TurningContextData,
+  ) {
+    super();
+  }
+
+  async createPage(index = 0): Promise<Page> {
+    let pagePromises = this.pagePromises;
+
+    let promise = pagePromises[index];
+
+    if (promise) {
+      throw new Error(`Page of index ${index} already created`);
+    }
+
+    let pagePromise = this.environment.createPage(index).then(page => {
+      page.on('pageerror', error => this.emit('error', error));
+      return page;
+    });
+
+    pagePromises[index] = pagePromise;
+
+    return pagePromise;
+  }
+
+  async getPage(index = 0): Promise<Page> {
+    let promise = this.pagePromises[index];
+
+    if (!promise) {
+      throw new Error(`Page of index ${index} has not been created yet`);
+    }
+
+    return promise;
+  }
+
+  async getPages(): Promise<(Page | undefined)[]> {
+    return Promise.all(this.pagePromises);
   }
 
   spawn(): this {
-    return new TurningContext(this.page, _.cloneDeep(this.data)) as this;
+    return new TurningContext(this.environment, _.cloneDeep(this.data)) as this;
   }
 }
 
@@ -78,8 +115,8 @@ export interface TurningEnvironmentOptions {
 export class TurningEnvironment extends AbstractTurningEnvironment<
   TurningContext
 > {
-  browser!: Browser;
-  browserContext!: BrowserContext;
+  private browser!: Browser;
+  private browserContextPromises!: (Promise<BrowserContext> | undefined)[];
 
   private connectOptions: ConnectOptions | undefined;
   private launchOptions: LaunchOptions | undefined;
@@ -95,6 +132,8 @@ export class TurningEnvironment extends AbstractTurningEnvironment<
   }
 
   async setup(): Promise<void> {
+    await FSExtra.emptyDir(SCREENSHOTS_DIR);
+
     if (this.connectOptions) {
       this.browser = await connect(this.connectOptions);
     } else {
@@ -109,29 +148,56 @@ export class TurningEnvironment extends AbstractTurningEnvironment<
   }
 
   async before(): Promise<void> {
-    this.browserContext = await this.browser.createIncognitoBrowserContext();
+    this.browserContextPromises = [];
   }
 
   async after(): Promise<void> {
-    // await this.browserContext.close();
+    let browserContexts = _.compact(
+      await Promise.all(this.browserContextPromises),
+    );
+
+    for (let browserContext of browserContexts) {
+      await browserContext.close();
+    }
   }
 
   async afterEach(
-    {page}: TurningContext,
+    context: TurningContext,
     {id, attempts, passed}: TurningEnvironmentAfterEachData,
   ): Promise<void> {
-    await page.screenshot({
-      path: Path.join(
-        SCREENSHOTS_DIR,
-        `${id}-${attempts + 1}-${passed ? 'passed' : 'failed'}.png`,
-      ),
-    });
+    let pages = await context.getPages();
 
-    await page.close();
+    for (let [index, page] of pages.entries()) {
+      if (!page) {
+        continue;
+      }
+
+      await page.screenshot({
+        path: Path.join(
+          SCREENSHOTS_DIR,
+          `${id}-attempt-${attempts + 1}-context-${index}-${
+            passed ? 'passed' : 'failed'
+          }.png`,
+        ),
+      });
+
+      await page.close();
+    }
   }
 
-  async newPage(): Promise<Page> {
-    return this.browserContext.newPage();
+  async createPage(index: number): Promise<Page> {
+    let browserContextPromises = this.browserContextPromises;
+
+    let browserContextPromise = browserContextPromises[index];
+
+    if (!browserContextPromise) {
+      browserContextPromise = this.browser.createIncognitoBrowserContext();
+      browserContextPromises[index] = browserContextPromise;
+    }
+
+    let browserContext = await browserContextPromise;
+
+    return browserContext.newPage();
   }
 }
 

@@ -19,6 +19,7 @@
     "@mufan/eslint-plugin": "^0.1.32",
     "@types/expect-puppeteer": "^4.4.3",
     "@types/faker": "^4.1.12",
+    "@types/fs-extra": "^9.0.1",
     "@types/lodash": "^4.14.159",
     "@types/node": "^14.6.0",
     "@types/node-fetch": "^2.5.7",
@@ -28,6 +29,7 @@
     "expect": "^26.4.0",
     "expect-puppeteer": "^4.4.0",
     "faker": "^4.1.0",
+    "fs-extra": "^9.0.1",
     "get-or-create": "^0.1.1",
     "get-port": "^5.1.1",
     "inplate": "^0.1.11",
@@ -41,7 +43,7 @@
     "ts-node": "^9.0.0",
     "tslang": "^0.1.22",
     "tslib": "^2.0.1",
-    "turning": "0.1.0-wip.13",
+    "turning": "0.1.0-wip.14",
     "typescript": "^3.9.7",
     "villa": "^0.3.2"
   }

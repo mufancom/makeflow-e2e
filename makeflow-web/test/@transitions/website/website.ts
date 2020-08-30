@@ -12,11 +12,13 @@ turning
   .initialize(['/website/home'])
   .alias('goto home page')
   .by('goto', async environment => {
-    let page = await environment.newPage();
+    let context = new TurningContext(environment, createTurningContextData());
+
+    let page = await context.createPage();
 
     await page.goto(WEBSITE_URL);
 
-    return new TurningContext(page, createTurningContextData());
+    return context;
   });
 
 turning
@@ -24,11 +26,13 @@ turning
   .alias('goto home page (user A not registered)')
   .manual()
   .by('goto', async environment => {
-    let page = await environment.newPage();
+    let context = new TurningContext(environment, USER_CONTEXT_A);
+
+    let page = await context.createPage();
 
     await page.goto(WEBSITE_URL);
 
-    return new TurningContext(page, USER_CONTEXT_A);
+    return context;
   });
 
 turning
@@ -38,12 +42,15 @@ turning
     'session:organization-created',
   ])
   .alias('goto home page (user A registered)')
+  .manual()
   .by('goto', async environment => {
-    let page = await environment.newPage();
+    let context = new TurningContext(environment, USER_CONTEXT_A);
+
+    let page = await context.createPage();
 
     await page.goto(WEBSITE_URL);
 
-    return new TurningContext(page, USER_CONTEXT_A);
+    return context;
   });
 
 turning
@@ -52,7 +59,9 @@ turning
   })
   .to(['/website/login'])
   .alias('click login button on home page')
-  .by('clicking login button', async ({page}) => {
+  .by('clicking login button', async context => {
+    let page = await context.getPage();
+
     await page.click('.login-button');
   });
 
@@ -62,8 +71,10 @@ turning
   })
   .to(['/app', 'session:logged-in', 'session:organization-selected'])
   .alias('submit login form')
-  .by('submitting login form', async ({page, data}) => {
-    let {mobile, password} = data.account!;
+  .by('submitting login form', async context => {
+    let page = await context.getPage();
+
+    let {mobile, password} = context.data.account!;
 
     await expect(page).toFill('input[name="mobile"]', mobile);
     await expect(page).toFill('input[name="password"]', password);
@@ -79,7 +90,9 @@ turning
   })
   .to(['/website/sign-up/create-account'])
   .alias('click sign-up button on home page')
-  .by('clicking sign-up button', async ({page}) => {
+  .by('clicking sign-up button', async context => {
+    let page = await context.getPage();
+
     await page.click('.sign-up-button');
   });
 
@@ -87,7 +100,10 @@ turning
   .turn(['/website/sign-up/create-account'])
   .to(['/website/sign-up/create-account/password-form'])
   .alias('fill mobile to create account')
-  .by('filling mobile and clicking next step button', async ({page, data}) => {
+  .by('filling mobile and clicking next step button', async context => {
+    let page = await context.getPage();
+    let data = context.data;
+
     let {mobile, password} = data.account || {
       mobile: generateRandomMobile(),
       password: 'abc123',
@@ -113,8 +129,10 @@ turning
     'session:logged-in',
   ])
   .alias('submit form to create account')
-  .by('filling form and clicking submit button', async ({page, data}) => {
-    let {password} = data.account!;
+  .by('filling form and clicking submit button', async context => {
+    let page = await context.getPage();
+
+    let {password} = context.data.account!;
 
     let code = await getVerificationCode();
 
@@ -132,7 +150,10 @@ turning
     'session:organization-selected',
   ])
   .alias('create organization')
-  .by('filling form and clicking next step button', async ({page, data}) => {
+  .by('filling form and clicking next step button', async context => {
+    let page = await context.getPage();
+    let data = context.data;
+
     let {name, size, industry} = data.organization || {
       name: '测试组织',
       size: '10 ~ 50人',
@@ -160,7 +181,10 @@ turning
   .turn(['/website/sign-up/complete-user-profile'])
   .to(['/app'])
   .alias('complete user profile')
-  .by('filling form and clicking complete button', async ({page, data}) => {
+  .by('filling form and clicking complete button', async context => {
+    let page = await context.getPage();
+    let data = context.data;
+
     let {fullName, username} = data.user || {
       fullName: '测试',
       username: 'ceshi',
