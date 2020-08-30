@@ -26,6 +26,9 @@ chrome --remote-debugging-port=9222 --user-data-dir=/tmp/puppeteer --guest
 - 创建时勾选 `makeflow-web` 工作空间模板，然后额外勾选 `makeflow-e2e` 项目模板。这两个模板已经配置了端口转发，包括 9222 端口。
 - 本地打开 Chrome/Chromium，参数参照上面。
 - 打开 `makeflow-web` 远程项目照常启动 biu 和相关程序，确认在本地访问正常。
+
+  > 注意：使用生产模式构建（`yarn pack-projects` 后 `start-commercial-gateway-production`）可以大幅提高测试速度。
+
 - 打开 `makeflow-e2e` 远程项目， `curl http://localhost:9222` 确认相关端口成功转发。执行 `yarn test:makeflow-web` 开始测试。
 
 ### 使用 Windows 服务器连接远程空间
