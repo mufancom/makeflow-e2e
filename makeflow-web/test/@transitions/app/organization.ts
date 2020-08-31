@@ -11,7 +11,7 @@ turning
     transition(async (page, data) => {
       await page.click('.invite-user-button');
 
-      await page.click('.invite-member-modal .label-by-link');
+      await page.click('.invite-user-modal .label-by-link');
 
       await expect(page).toMatchElement('.copy-button:not(:disabled)', {
         timeout: 2000,
