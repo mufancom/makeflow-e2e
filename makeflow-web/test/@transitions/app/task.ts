@@ -1,23 +1,37 @@
 import {turning} from '../../@turning';
+import {transition} from '../../@utils';
 
 turning
   .turn([], {
-    match: ['/app/primary/workbench', {not: 'modal:create-task'}],
+    match: ['0-0/app/primary/workbench', {not: 'modal-0-0:create-task{,:**}'}],
   })
-  .to(['modal:create-task'])
-  .by('clicking "+" on workbench', async context => {
-    let page = await context.getPage();
+  .to(['modal-0-0:create-task'])
+  .by(
+    'clicking "+" on workbench',
+    transition(async page => {
+      // Due to unknown reasons, `page.click()` and `expect(page).toClick()` are
+      // not stable here. Might be result of re-rendering.
 
-    // Due to unknown reasons, `page.click()` and `expect(page).toClick()` are
-    // not stable here. Might be result of re-rendering.
-
-    await page.$eval('.create-task-button', button => button.click());
-  });
+      await page.$eval('.create-task-button', button => button.click());
+    }),
+  );
 
 turning
   .turn([], {
-    pattern: false,
-    match: 'modal:create-task',
+    pattern: '0-0-modal',
+    match: 'modal-0-0:create-task',
   })
-  .to(['task:create:procedure-selected'])
+  .to(['modal-0-0:create-task:procedure-selected'])
   .by('doing nothing', async () => {});
+
+turning
+  .turn(['modal-0-0:create-task{,:**}'], {
+    pattern: '0-0-modal',
+  })
+  .to([])
+  .by(
+    'clicking document',
+    transition(async page => {
+      await page.click('#app');
+    }),
+  );

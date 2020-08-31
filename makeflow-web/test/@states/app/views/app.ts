@@ -1,33 +1,33 @@
 import {turning} from '../../../@turning';
 
-turning.define('/app');
+turning.define('0-0/app');
 
-turning.define('/app/primary/workbench').test(async context => {
-  let page = await context.getPage();
+turning.define('0-0/app/primary/workbench').test(async context => {
+  let page = await context.getPage('0-0');
 
   await page.waitFor('.workbench-view');
 });
 
-turning.define('/app/sidebar').test(async context => {
-  let page = await context.getPage();
+turning.define('0-0/app/sidebar').test(async context => {
+  let page = await context.getPage('0-0');
 
   await page.waitFor('#app > .sidebar');
 });
 
-turning.define('/app/sidebar/achievements').test(async context => {
-  let page = await context.getPage();
+turning.define('0-0/app/sidebar/achievements').test(async context => {
+  let page = await context.getPage('0-0');
 
   await page.waitFor('.expanded-sidebar .achievements');
 });
 
-turning.define('/app/sidebar/idea').test(async context => {
-  let page = await context.getPage();
+turning.define('0-0/app/sidebar/idea').test(async context => {
+  let page = await context.getPage('0-0');
 
   await page.waitFor('.expanded-sidebar .idea');
 
-  for (let text of context.data.idea.active) {
+  for (let text of context.data.idea?.active ?? []) {
     await expect(page).toMatchElement('.idea-list-item', {text});
   }
 });
 
-turning.define('/app/overlay');
+turning.define('0-0/app/overlay');

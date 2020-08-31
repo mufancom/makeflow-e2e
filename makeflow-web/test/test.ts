@@ -26,6 +26,7 @@ main(async () => {
       ? {
           bail: true,
           maxAttempts: 3,
+          allowUnreachable: true,
           verbose: true,
         }
       : {

@@ -1,9 +1,14 @@
 import fetch from 'node-fetch';
 import {Page} from 'puppeteer-core';
+import {TransitionHandler} from 'turning';
 import * as v from 'villa';
 
 import {API_E2E_GET_VERIFICATION_CODE_URL} from './@constants';
-import {TurningContextData} from './@turning';
+import {
+  TurningContext,
+  TurningContextData,
+  TurningEnvironment,
+} from './@turning';
 
 declare const _entrances: any;
 
@@ -18,17 +23,6 @@ export function generateRandomMobile(): string {
   return `186${Math.floor(Math.random() * 100000000)
     .toString()
     .padStart(8, '0')}`;
-}
-
-export function createTurningContextData(
-  partial: Partial<TurningContextData> = {},
-): TurningContextData {
-  return {
-    idea: {
-      active: [],
-    },
-    ...partial,
-  };
 }
 
 export async function pageUISelect(
@@ -60,4 +54,30 @@ export async function waitForRouting(page: Page): Promise<void> {
   }
 
   throw new Error('Timeout waiting for routing');
+}
+
+export function transition(
+  handler: (page: Page, data: TurningContextData) => Promise<void>,
+): TransitionHandler<
+  TurningContext,
+  TurningEnvironment,
+  TurningGenericParams['state']
+> {
+  return async (context, _environment, states) => {
+    let id = getUserIdFromStates(states);
+
+    let page = await context.getPage(id);
+
+    await handler(page, context.data);
+  };
+}
+
+export function getUserIdFromStates(states: string[]): string {
+  let userState = states.find(state => state.startsWith('context:'));
+
+  if (!userState) {
+    throw new Error('Expecting state `context:[id]`');
+  }
+
+  return userState.slice('context:'.length);
 }

@@ -1,12 +1,14 @@
 import {turning} from '../@turning';
+import {transition} from '../@utils';
 
 turning
   .turn([], {
-    match: [{not: '/website/sign-up/create-account/password-form'}],
+    match: [{not: '0-0/website/sign-up/create-account/password-form'}],
   })
   .to([])
-  .by('reloading page', async context => {
-    let page = await context.getPage();
-
-    await page.reload();
-  });
+  .by(
+    'reloading page',
+    transition(async page => {
+      await page.reload();
+    }),
+  );

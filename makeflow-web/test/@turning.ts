@@ -32,20 +32,21 @@ const {CI, REMOTE_USER_NAME} = process.env;
 const REMOTE = !!REMOTE_USER_NAME;
 
 export interface TurningContextData {
-  account?: {
+  account_0?: {
     mobile: string;
     password: string;
+    user_0?: {
+      fullName: string;
+      username: string;
+    };
   };
-  organization?: {
-    name: string;
+  organization_0?: {
+    displayName: string;
     size: string;
     industry: string;
+    joinLink?: string;
   };
-  user?: {
-    fullName: string;
-    username: string;
-  };
-  idea: {
+  idea?: {
     active: string[];
   };
   task?: {
@@ -60,7 +61,7 @@ export interface TurningContextData {
 }
 
 export class TurningContext extends AbstractTurningContext {
-  private pagePromises: (Promise<Page> | undefined)[] = [];
+  private pagePromiseMap = new Map<string, Promise<Page>>();
 
   constructor(
     readonly environment: TurningEnvironment,
@@ -69,37 +70,39 @@ export class TurningContext extends AbstractTurningContext {
     super();
   }
 
-  async createPage(index = 0): Promise<Page> {
-    let pagePromises = this.pagePromises;
+  async createPage(contextId: string): Promise<Page> {
+    let pagePromiseMap = this.pagePromiseMap;
 
-    let promise = pagePromises[index];
+    let promise = pagePromiseMap.get(contextId);
 
     if (promise) {
-      throw new Error(`Page of index ${index} already created`);
+      throw new Error(`Page of context id ${contextId} already created`);
     }
 
-    let pagePromise = this.environment.createPage(index).then(page => {
+    let pagePromise = this.environment.createPage(contextId).then(page => {
       page.on('pageerror', error => this.emit('error', error));
       return page;
     });
 
-    pagePromises[index] = pagePromise;
+    pagePromiseMap.set(contextId, pagePromise);
 
     return pagePromise;
   }
 
-  async getPage(index = 0): Promise<Page> {
-    let promise = this.pagePromises[index];
+  async getPage(contextId: string): Promise<Page> {
+    let promise = this.pagePromiseMap.get(contextId);
 
     if (!promise) {
-      throw new Error(`Page of index ${index} has not been created yet`);
+      throw new Error(
+        `Page of context id ${contextId} has not been created yet`,
+      );
     }
 
     return promise;
   }
 
   async getPages(): Promise<(Page | undefined)[]> {
-    return Promise.all(this.pagePromises);
+    return Promise.all(this.pagePromiseMap.values());
   }
 
   spawn(): this {
@@ -116,7 +119,7 @@ export class TurningEnvironment extends AbstractTurningEnvironment<
   TurningContext
 > {
   private browser!: Browser;
-  private browserContextPromises!: (Promise<BrowserContext> | undefined)[];
+  private browserContextPromiseMap = new Map<string, Promise<BrowserContext>>();
 
   private connectOptions: ConnectOptions | undefined;
   private launchOptions: LaunchOptions | undefined;
@@ -147,18 +150,16 @@ export class TurningEnvironment extends AbstractTurningEnvironment<
     }
   }
 
-  async before(): Promise<void> {
-    this.browserContextPromises = [];
-  }
-
   async after(): Promise<void> {
-    let browserContexts = _.compact(
-      await Promise.all(this.browserContextPromises),
-    );
+    let browserContextPromiseMap = this.browserContextPromiseMap;
+
+    let browserContexts = await Promise.all(browserContextPromiseMap.values());
 
     for (let browserContext of browserContexts) {
       await browserContext.close();
     }
+
+    browserContextPromiseMap.clear();
   }
 
   async afterEach(
@@ -185,14 +186,14 @@ export class TurningEnvironment extends AbstractTurningEnvironment<
     }
   }
 
-  async createPage(index: number): Promise<Page> {
-    let browserContextPromises = this.browserContextPromises;
+  async createPage(contextId: string): Promise<Page> {
+    let browserContextPromiseMap = this.browserContextPromiseMap;
 
-    let browserContextPromise = browserContextPromises[index];
+    let browserContextPromise = browserContextPromiseMap.get(contextId);
 
     if (!browserContextPromise) {
       browserContextPromise = this.browser.createIncognitoBrowserContext();
-      browserContextPromises[index] = browserContextPromise;
+      browserContextPromiseMap.set(contextId, browserContextPromise);
     }
 
     let browserContext = await browserContextPromise;
@@ -236,28 +237,50 @@ export const turning = new Turning<
   TurningGenericParams
 >(environment, {
   statesCombinationValidator(states) {
-    let appRouteStates = states.filter(state => /^\/app\//.test(state));
+    let appRouteStates = states.filter(state => /^\d+-\d+\/app\//.test(state));
 
     if (appRouteStates.length) {
-      let appRouteTypes = appRouteStates
-        .map(
-          // eslint-disable-next-line @mufan/no-unnecessary-type-assertion
-          state => state.match(/^\/app\/([^/]*)/)![1],
-        )
-        .sort();
+      let appRouteEntriesDict = _.groupBy(
+        appRouteStates.map(state => {
+          let [, id, type] = state.match(/^(\d+-\d+)\/app\/([^/]*)/)!;
 
-      if (!_.isEqual(APP_ROUTE_TYPES, appRouteTypes)) {
-        throw new Error(
-          `Unexpected app route types found in states combination:\n${states
-            .map(state => `  ${state}`)
-            .join('\n')}`,
-        );
+          return {
+            id,
+            type,
+          };
+        }),
+        entry => entry.id,
+      );
+
+      for (let entries of Object.values(appRouteEntriesDict)) {
+        let types = entries.map(entry => entry.type).sort();
+
+        if (!_.isEqual(APP_ROUTE_TYPES, types)) {
+          throw new Error(
+            `Unexpected app route types found in states combination:\n${states
+              .map(state => `  ${state}`)
+              .join('\n')}`,
+          );
+        }
       }
+    }
+
+    let activeUserStates = states.filter(state => /^context:/.test(state));
+
+    if (activeUserStates.length !== 1) {
+      throw new Error(
+        'Expecting one and only one `context:[id]` state at the same time',
+      );
     }
   },
 });
 
-turning.pattern(getStateMatchingPatternsWithout([]));
+turning.pattern(getStateMatchingPatternsWithout('0-0'));
+turning.pattern('0-0-modal', getStateMatchingPatternsWithout('0-0', ['modal']));
+turning.pattern(
+  '0-0-to-0-1',
+  getStateMatchingPatternsWithout('0-0', '0-1', []),
+);
 
 turning.case('register user A', [
   'goto home page (user A not registered)',
@@ -278,12 +301,40 @@ turning.case('logout user A from workbench', [
 
 export type StateMatchingPatternType = typeof STATE_MATCHING_PATTERN_TYPES[number];
 
+export interface StateMatchingPatternOptions {
+  context?: string;
+  types?: StateMatchingPatternType[];
+}
+
 export function getStateMatchingPatternsWithout(
-  types: StateMatchingPatternType[],
+  contextId: string,
+  types?: StateMatchingPatternType[],
+): StateMatchingPattern<TurningGenericParams['statePattern']>[];
+export function getStateMatchingPatternsWithout(
+  sourceContextId: string,
+  targetContextId: string,
+  types?: StateMatchingPatternType[],
+): StateMatchingPattern<TurningGenericParams['statePattern']>[];
+export function getStateMatchingPatternsWithout(
+  ...args: any[]
 ): StateMatchingPattern<TurningGenericParams['statePattern']>[] {
-  return _.difference(STATE_MATCHING_PATTERN_TYPES, types).map(type => {
-    return {
-      not: `${type}:*`,
-    } as StateMatchingPattern<TurningGenericParams['statePattern']>;
-  });
+  let sourceContextId: string;
+  let targetContextId: string;
+  let types: string[];
+
+  if (typeof args[1] === 'string') {
+    [sourceContextId, targetContextId, types = []] = args;
+  } else {
+    [sourceContextId, types = []] = args;
+    targetContextId = sourceContextId;
+  }
+
+  return [
+    `context:${sourceContextId}` as TurningGenericParams['state'],
+    ..._.difference(STATE_MATCHING_PATTERN_TYPES, types).map(type => {
+      return {
+        not: `${type}-${targetContextId}:*`,
+      } as StateMatchingPattern<TurningGenericParams['statePattern']>;
+    }),
+  ];
 }

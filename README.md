@@ -53,7 +53,7 @@ chrome --remote-debugging-port=9222 --user-data-dir=/tmp/puppeteer --guest
 
 在使用 Turning 编写 E2E 测试的有限经验中，我们发现状态转换测试其实具体到 E2E 测试场景，为开发者带来了不少的心智负担，这些负担可能会也可能不会随着开发者对测试项目的熟悉而减少。
 
-在实际使用中，状态转移通常会涉及到由多个状态组成的复合状态，并且很多转移都有特定的前置条件。举例来说，在此项目中，涉及到 `modal:*` 状态，用来表示当前的对话框，并且在默认匹配模式（pattern）中排除了 `modal:*` 状态，避免在有对话框出现时发生意外的状态转移。类似的还有 `navigation-block:*` 状态。
+在实际使用中，状态转移通常会涉及到由多个状态组成的复合状态，并且很多转移都有特定的前置条件。举例来说，在此项目中，涉及到 `modal-0-0:*` 状态，用来表示当前的对话框，并且在默认匹配模式（pattern）中排除了 `modal-0-0:*` 状态，避免在有对话框出现时发生意外的状态转移。类似的还有 `navigation-block-0-0:*` 状态。
 
 状态粒度越小，这类负担会越大，所以在实践中，如非必要，应该维持适当的状态粒度。
 
@@ -66,7 +66,9 @@ chrome --remote-debugging-port=9222 --user-data-dir=/tmp/puppeteer --guest
 
 #### 状态分类
 
-在此项目中，有两种类型的状态：一为路由状态，通常是以类似路径的方式表示，如 `/login`、`/app/primary/workbench`、`/app/sidebar/achievements`（注意平行路由表述方式）；二为逻辑状态，通常以 `:` 分隔层级，如 `session:registered`，`procedure:simple:created`。下面给状态表中可以找到一些总结性的状态说明，也请在测试编写过程中及时更新、补充。
+在此项目中，有两种类型的状态：一为路由状态，通常是以类似路径的方式表示，如 `0-0/login`、`0-0/app/primary/workbench`、`0-0/app/sidebar/achievements`（注意平行路由表述方式）；二为逻辑状态，通常以 `:` 分隔层级，如 `user-0-0:registered`，`procedure-0-simple:created`。下面给状态表中可以找到一些总结性的状态说明，也请在测试编写过程中及时更新、补充。
+
+其中：`0-0` 是常见的 context id，表示第一个组织第一个用户；`procedure-0-simple` 中的 `0-simple` 则表示第一个组织中别称为 `simple` 的流程。
 
 ## 状态表
 
@@ -74,15 +76,16 @@ chrome --remote-debugging-port=9222 --user-data-dir=/tmp/puppeteer --guest
 
 ### 路由状态表
 
-website 程序没有平行路由，所以直接以 `/website` 加类似实际路由的方式表示。如：
+website 程序没有平行路由，所以直接以 `[context-id]/website` 加类似实际路由的方式表示。如：
 
-- `/website/login`
+- `0-0/website/login`
+- `0-1/website/join`
 
-app 则区分平行路由，以 `/app/{primary,sidebar,overlay}` 加类似实际路由的方式表示。如
+app 则区分平行路由，以 `[context-id]/app/{primary,sidebar,overlay}` 加类似实际路由的方式表示。如
 
-- `/app/primary/workbench`
-- `/app/primary/teams/default/procedures`
-- `/app/sidebar/achievements`
+- `0-0/app/primary/workbench`
+- `0-0/app/primary/teams/default/procedures`
+- `0-0/app/sidebar/achievements`
 
 **这里注意一个很重要的约定**：
 
@@ -92,8 +95,9 @@ app 则区分平行路由，以 `/app/{primary,sidebar,overlay}` 加类似实际
 
 ### 逻辑状态表
 
-- `session:*` 表示会话相关状态。
-- 其他业务相关状态以业务名称开头，如 `procedure:*`
+- `context:[context-id]` 当前操作的上下文。测试过程中，多个用户的操作可能是交叉进行的，这个状态则表示当前是要操作哪个用户的上下文。
+- `user-[context-id]:*` 表示用户相关状态，比如是否注册，是否登录。
+- 其他业务相关状态以业务名称开头，如 `procedure-*`
 
 ## 其他
 

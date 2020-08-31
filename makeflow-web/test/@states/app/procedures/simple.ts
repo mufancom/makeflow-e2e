@@ -3,12 +3,12 @@ import {waitForRouting} from '../../../@utils';
 
 declare const _entrances: any;
 
-turning.define('navigation-block:procedure-changed');
+turning.define('navigation-block-0-0:procedure-changed');
 
-turning.define('procedure:simple:creating');
+turning.define('procedure-0-simple:creating');
 
-turning.define('procedure:simple:created').test(async context => {
-  let page = await context.getPage();
+turning.define('procedure-0-simple:created').test(async context => {
+  let page = await context.getPage('0-0');
 
   await waitForRouting(page);
 
