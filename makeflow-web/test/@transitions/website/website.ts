@@ -1,7 +1,7 @@
 import getOrCreate from 'get-or-create';
 
 import {WEBSITE_URL} from '../../@constants';
-import {SESSION_CONTEXT_A} from '../../@sessions';
+import {CONTEXT_SESSION_A, SESSION_CONTEXT_A} from '../../@sessions';
 import {TurningContext, turning} from '../../@turning';
 import {
   generateRandomMobile,
@@ -14,7 +14,7 @@ turning
   .initialize(['0-0/website/', 'context:0-0'])
   .alias('goto home page')
   .by('goto', async environment => {
-    let context = new TurningContext(environment, {});
+    let context = new TurningContext(environment, {}, {});
 
     let page = await context.createPage('0-0');
 
@@ -28,7 +28,11 @@ turning
   .alias('goto home page (user A not registered)')
   .manual()
   .by('goto', async environment => {
-    let context = new TurningContext(environment, SESSION_CONTEXT_A);
+    let context = new TurningContext(
+      environment,
+      SESSION_CONTEXT_A,
+      CONTEXT_SESSION_A,
+    );
 
     let page = await context.createPage('0-0');
 
@@ -47,7 +51,11 @@ turning
   .alias('goto home page (user A registered)')
   .manual()
   .by('goto', async environment => {
-    let context = new TurningContext(environment, SESSION_CONTEXT_A);
+    let context = new TurningContext(
+      environment,
+      SESSION_CONTEXT_A,
+      CONTEXT_SESSION_A,
+    );
 
     let page = await context.createPage('0-0');
 
@@ -156,7 +164,7 @@ turning
   .alias('create organization')
   .by(
     'filling form and clicking next step button',
-    transition(async (page, data) => {
+    transition(async (page, data, session) => {
       let {displayName, size, industry} = getOrCreate(data)
         .property('organization_0', {
           displayName: '测试组织',
@@ -164,6 +172,8 @@ turning
           industry: '其他',
         })
         .exec();
+
+      session.account_0 = {preSale: true};
 
       await expect(page).toFill('input[name="name"]', displayName);
 
@@ -183,7 +193,7 @@ turning
   .alias('complete user profile')
   .by(
     'filling form and clicking complete button',
-    transition(async (page, data) => {
+    transition(async (page, data, session) => {
       let {fullName, username} = getOrCreate(data.account_0!)
         .property('user_0', {
           fullName: '测试',
@@ -203,5 +213,15 @@ turning
       await page.click('.submit-button');
 
       await page.waitForNavigation();
+
+      if (session.account_0?.preSale) {
+        await page.waitFor('.ui-modal', {
+          timeout: 10000,
+        });
+
+        await page.click('.ui-modal .close-button');
+
+        session.account_0.preSale = false;
+      }
     }),
   );

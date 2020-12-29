@@ -7,6 +7,7 @@ import {API_E2E_GET_VERIFICATION_CODE_URL} from './@constants';
 import {
   TurningContext,
   TurningContextData,
+  TurningContextSession,
   TurningEnvironment,
 } from './@turning';
 
@@ -57,7 +58,11 @@ export async function waitForRouting(page: Page): Promise<void> {
 }
 
 export function transition(
-  handler: (page: Page, data: TurningContextData) => Promise<void>,
+  handler: (
+    page: Page,
+    data: TurningContextData,
+    session: TurningContextSession,
+  ) => Promise<void>,
 ): TransitionHandler<
   TurningContext,
   TurningEnvironment,
@@ -68,7 +73,7 @@ export function transition(
 
     let page = await context.getPage(id);
 
-    await handler(page, context.data);
+    await handler(page, context.data, context.session);
   };
 }
 
