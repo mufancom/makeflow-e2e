@@ -12,8 +12,6 @@ turning.define('procedure-0-simple:created').test(async context => {
 
   await waitForRouting(page);
 
-  await page.waitFor(2000);
-
   let found = await page.evaluate(displayName => {
     return _entrances.syncableService.client
       .getObjects('procedure')
