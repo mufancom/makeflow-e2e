@@ -1,4 +1,4 @@
-import {TurningContextData} from './@turning';
+import {TurningContextData, TurningContextSession} from './@turning';
 import {generateRandomMobile} from './@utils';
 
 export const SESSION_CONTEXT_A: TurningContextData = {
@@ -14,5 +14,11 @@ export const SESSION_CONTEXT_A: TurningContextData = {
     displayName: '测试组织 A',
     size: '1 ~ 10人',
     industry: '其他',
+  },
+};
+
+export const CONTEXT_SESSION_A: TurningContextSession = {
+  account_0: {
+    preSale: false,
   },
 };

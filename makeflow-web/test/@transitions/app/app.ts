@@ -12,6 +12,16 @@ turning
 
     await page.goto(APP_WORKBENCH_URL);
 
+    if (context.session.account_0?.preSale) {
+      await page.waitFor('.ui-modal', {
+        timeout: 2000,
+      });
+
+      await page.click('.ui-modal .close-button');
+
+      context.session.account_0.preSale = false;
+    }
+
     return context;
   });
 

@@ -60,12 +60,19 @@ export interface TurningContextData {
   };
 }
 
+export interface TurningContextSession {
+  account_0?: {
+    preSale: boolean;
+  };
+}
+
 export class TurningContext extends AbstractTurningContext {
   private pagePromiseMap = new Map<string, Promise<Page>>();
 
   constructor(
     readonly environment: TurningEnvironment,
     readonly data: TurningContextData,
+    readonly session: TurningContextSession,
   ) {
     super();
   }
@@ -106,7 +113,11 @@ export class TurningContext extends AbstractTurningContext {
   }
 
   spawn(): this {
-    return new TurningContext(this.environment, _.cloneDeep(this.data)) as this;
+    return new TurningContext(
+      this.environment,
+      _.cloneDeep(this.data),
+      this.session,
+    ) as this;
   }
 }
 
