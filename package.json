@@ -33,7 +33,7 @@
     "get-or-create": "^0.1.1",
     "get-port": "^5.1.1",
     "inplate": "^0.1.11",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "main-function": "^0.1.2",
     "merge": "^1.2.1",
     "node-fetch": "^2.6.0",
