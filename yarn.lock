@@ -1309,10 +1309,10 @@ make-error@^1.1.1:
   resolved "https://registry.npm.taobao.org/make-error/download/make-error-1.3.6.tgz#2eb2e37ea9b67c4891f684a1394799af484cf7a2"
   integrity sha1-LrLjfqm2fEiR9oShOUeZr0hM96I=
 
-merge@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.npm.taobao.org/merge/download/merge-1.2.1.tgz#38bebf80c3220a8a487b6fcfb3941bb11720c145"
-  integrity sha1-OL6/gMMiCopIe2/Ps5QbsRcgwUU=
+merge@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.npm.taobao.org/merge/download/merge-2.1.1.tgz#59ef4bf7e0b3e879186436e8481c06a6c162ca98"
+  integrity sha1-We9L9+Cz6HkYZDboSBwGpsFiypg=
 
 micromatch@^4.0.2:
   version "4.0.2"
